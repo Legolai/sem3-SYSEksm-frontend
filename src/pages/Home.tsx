@@ -17,7 +17,7 @@ function Home() {
 		getGreeting();
 	}, [authState.loggedIn]);
 
-	return <div>{greeting}</div>;
+	return <div className="bg-white p-5 rounded-lg w-fit m-5">{greeting}</div>;
 }
 
 export default Home;

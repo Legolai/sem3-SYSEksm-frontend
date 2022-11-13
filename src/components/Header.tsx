@@ -13,7 +13,7 @@ function Header({ setErrorMsg }: HeaderProps) {
 
 	return (
 		<>
-			<nav className="w-full flex shadow-lg  bg-white h-[50px] gap-2">
+			<nav className="w-full flex shadow-lg p-2  bg-white h-[60px] gap-2">
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem
@@ -43,19 +43,25 @@ function Header({ setErrorMsg }: HeaderProps) {
 					) : (
 						<>
 							<div>
-								<p className="text-white px-4">
-									{"Name: " +
-										state.username.charAt(0).toUpperCase() +
-										state.username.substring(1)}
+								<p className="px-4 flex gap-1 justify-center items-center">
+									<i className="fa fa-fw fa-user"></i>
+									<p>
+										{state.username.charAt(0).toUpperCase() +
+											state.username.substring(1)}
+									</p>
 								</p>
-								<p className="text-white px-4">
-									{"Roles: " +
-										state.roles.map(
-											(r, i) =>
-												(i > 0 ? " " : "") +
-												r.charAt(0).toUpperCase() +
-												r.substring(1)
-										)}
+								<p className="px-4 flex gap-1 justify-center items-center">
+									<i className="fa fa-address-card-o"></i>
+									<p>
+										{"[ " +
+											state.roles.map(
+												(r, i) =>
+													(i > 0 ? " " : "") +
+													r.charAt(0).toUpperCase() +
+													r.substring(1)
+											) +
+											" ]"}
+									</p>
 								</p>
 							</div>
 							<LoggedIn />

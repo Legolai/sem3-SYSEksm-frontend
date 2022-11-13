@@ -18,13 +18,22 @@ function ExamplePage() {
 	}, []);
 
 	return (
-		<div className="flex flex-col justify-center items-center gap-3">
-			<h2 className="text-2xl font-extrabold">The 5 Secondes Cat</h2>
-			{!data ? (
-				<LoadingSpinner />
-			) : (
-				<img className="rounded-lg" height={"100px"} width={"200px"} src={data?.cat.url} />
-			)}
+		<div className="flex flex-row-reverse justify-center items-start gap-3 mt-5">
+			<div className="bg-white flex flex-col justify-center items-center p-5 rounded-lg gap-4">
+				{!data ? (
+					<LoadingSpinner />
+				) : (
+					<>
+						<h2 className="text-2xl font-extrabold">The 5 Secondes Cat</h2>
+						<img
+							className="rounded-lg"
+							height={"100px"}
+							width={"200px"}
+							src={data?.cat.url}
+						/>
+					</>
+				)}
+			</div>
 			{data?.weather ? <WeatherInfoBox weather={data.weather} /> : <></>}
 		</div>
 	);
