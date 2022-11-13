@@ -14,7 +14,7 @@ function LoggedIn() {
 
 	return (
 		<div>
-			<Button onClick={onLogout}>Log Out</Button>
+			<Button outline onClick={onLogout}>Log Out</Button>
 		</div>
 	);
 }

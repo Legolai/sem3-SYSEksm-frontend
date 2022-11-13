@@ -1,3 +1,4 @@
+import Role from "@/types/entities/role";
 import { BASE_API_URL } from "../../settings";
 import WeatherNCat from "../types/entities/weatherNCat";
 
@@ -38,13 +39,19 @@ function apiFacade() {
     sessionStorage.removeItem("jwtToken");
   };
 
-  const login = (user: string, password: string) => {
+  const login = async (user: string, password: string) => {
     const options = makeOptions("POST", true, { username: user, password: password });
-    return fetch(BASE_API_URL + "/login", options)
-      .then(handleHttpErrors)
-      .then(res => {
-        setToken(res.token);
-      });
+    const res = await fetch(BASE_API_URL + "/login", options);
+    const data = await handleHttpErrors(res);
+    setToken(data.token);
+    return data;
+  };
+
+  const createUser = async (username: string, password: string, roles: Role[]) => {
+    const options = makeOptions("POST", true, { username, password, roles });
+    const res = await fetch(`${BASE_API_URL}/user`, options);
+    const data = await handleHttpErrors(res);
+    return data;
   };
 
   function makeOptions<T>(method: string, addToken: boolean, body?: T) {
@@ -98,6 +105,7 @@ function apiFacade() {
   };
 
   return {
+    createUser,
     makeOptions,
     setToken,
     getToken,

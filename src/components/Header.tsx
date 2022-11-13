@@ -1,10 +1,8 @@
-import React, { Dispatch, SetStateAction, useContext, useMemo, useState } from "react";
-import { NavLink } from "react-router-dom";
-import Login from "./Login.jsx";
-import LoggedIn from "./LoggedIn.jsx";
-import NavItem from "./NavItem.js";
+import { Link, Outlet } from "react-router-dom";
+import LoggedIn from "./LoggedIn";
+import NavItem from "./NavItem";
 import { useAuth } from "../stores/AuthContext.js";
-import { getUserInfo } from "../utils/credentialHelper.js";
+import Logo from "./Logo";
 
 interface HeaderProps {
 	setErrorMsg?: () => void;
@@ -14,37 +12,58 @@ function Header({ setErrorMsg }: HeaderProps) {
 	const { state } = useAuth();
 
 	return (
-		<nav className="w-full flex bg-gray-600 h-[50px] gap-2">
-			<NavItem route={"/"} icon={"home"} label={"Home"} end />
-			<NavItem allowedRoles={["admin"]} route={"/persons"} icon={"users"} label={"Persons"} />
-			<NavItem route={"/example-page"} icon={"book"} label={"Example"} />
+		<>
+			<nav className="w-full flex shadow-lg  bg-white h-[50px] gap-2">
+				<Logo />
+				<NavItem route={"/"} icon={"home"} label={"Home"} end />
+				<NavItem
+					allowedRoles={["admin"]}
+					route={"/persons"}
+					icon={"users"}
+					label={"Persons"}
+				/>
+				<NavItem route={"/example-page"} icon={"book"} label={"Example"} />
 
-			<div className="ml-auto flex items-center justify-center">
-				{!state.loggedIn ? (
-					<Login />
-				) : (
-					<>
-						<div>
-							<p className="text-white px-4">
-								{"Name: " +
-									state.username.charAt(0).toUpperCase() +
-									state.username.substring(1)}
-							</p>
-							<p className="text-white px-4">
-								{"Roles: " +
-									state.roles.map(
-										(r, i) =>
-											(i > 0 ? " " : "") +
-											r.charAt(0).toUpperCase() +
-											r.substring(1)
-									)}
-							</p>
-						</div>
-						<LoggedIn />
-					</>
-				)}
-			</div>
-		</nav>
+				<div className="ml-auto mr-2 flex items-center gap-2 justify-center">
+					{!state.loggedIn ? (
+						<>
+							<Link
+								to={"/signin"}
+								className="px-4 py-2 text-green-400 rounded-lg hover:scale-105 active:scale-95"
+							>
+								Sign In
+							</Link>
+							<Link
+								to={"/signup"}
+								className="text-white px-4 py-2 bg-green-400 rounded-lg hover:scale-105 active:scale-95"
+							>
+								Sign Up
+							</Link>
+						</>
+					) : (
+						<>
+							<div>
+								<p className="text-white px-4">
+									{"Name: " +
+										state.username.charAt(0).toUpperCase() +
+										state.username.substring(1)}
+								</p>
+								<p className="text-white px-4">
+									{"Roles: " +
+										state.roles.map(
+											(r, i) =>
+												(i > 0 ? " " : "") +
+												r.charAt(0).toUpperCase() +
+												r.substring(1)
+										)}
+								</p>
+							</div>
+							<LoggedIn />
+						</>
+					)}
+				</div>
+			</nav>
+		</>
 	);
 }
 
