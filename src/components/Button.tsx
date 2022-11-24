@@ -8,7 +8,9 @@ const Button = ({ type, onClick, children, className, outline, ...props }: Butto
 	return (
 		<button
 			className={`${className} flex-grow m-0 w-full px-5 py-2 rounded-lg ${
-				outline ? "border-2 border-green-400 text-green-400" : "bg-green-400 text-white"
+				outline
+					? "border-2 border-primary-500 text-primary-500"
+					: "bg-primary-500 text-white"
 			} active:scale-95 hover:scale-105 transition-all`}
 			type={type}
 			onClick={onClick}

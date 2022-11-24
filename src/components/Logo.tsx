@@ -4,8 +4,8 @@ function Logo() {
 	return (
 		<div className="flex justify-center items-center px-4">
 			<Link to={"/"}>
-				<h1 className="font-bold text-white bg-green-500 px-2 py-1 rounded-br-xl rounded-tl-xl text-lg">
-					Paperrolle
+				<h1 className="font-bold font-header text-white bg-primary-500 px-3 py-1 rounded-br-xl rounded-tl-xl text-lg">
+					Foocle
 				</h1>
 			</Link>
 		</div>
