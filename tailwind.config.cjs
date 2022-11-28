@@ -9,11 +9,11 @@ module.exports = {
 				body: ["Pavanam", "sans-serif"],
 			},
 			colors: {
-				"warning": "F6CA23",
-				"danger": "C63C4D",
-				"info": "3FA7D6",
-				"accept": "lightgreen",
-				"primary": {
+				warning: "#F6CA23",
+				danger: "#C63C4D",
+				info: "#3FA7D6",
+				accept: "#90EE90",
+				primary: {
 					50: "#f2fbfa",
 					100: "#e6f7f4",
 					200: "#bfece5",
@@ -25,7 +25,7 @@ module.exports = {
 					800: "#006b59",
 					900: "#005749",
 				},
-				"secondary": {
+				secondary: {
 					50: "#f6fffb",
 					100: "#eefff7",
 					200: "#d3ffec",
@@ -37,7 +37,7 @@ module.exports = {
 					800: "#30996a",
 					900: "#277d57",
 				},
-				"third": {
+				third: {
 					50: "#f5f7f9",
 					100: "#ebf0f3",
 					200: "#ccd9e2",
@@ -49,7 +49,7 @@ module.exports = {
 					800: "#1f3d53",
 					900: "#193144",
 				},
-				"fourth": {
+				fourth: {
 					50: "#fbfcff",
 					100: "#f7faff",
 					200: "#ebf2ff",
@@ -61,7 +61,7 @@ module.exports = {
 					800: "#697a99",
 					900: "#56637d",
 				},
-				"off-white": "F5F3F5",
+				"off-white": "#F5F3F5",
 			},
 		},
 	},
