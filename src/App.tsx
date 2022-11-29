@@ -21,7 +21,7 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/persons" element={<GuardedRoute allowedRoles={["admin"]} />}>
+				<Route path="/persons" element={<GuardedRoute permissionRequired={"FOOCLEBUSINESS"} />}>
 					<Route index element={<User />} />
 				</Route>
 				<Route path="/signin" element={<SignIn />} />

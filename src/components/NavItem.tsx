@@ -1,19 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../stores/AuthContext";
-import Role from "../types/entities/role";
+import Permission from "../types/entities/permission";
 
 interface NavItemProps {
 	label: string;
 	icon: string;
 	route: string;
 	end?: boolean;
-	allowedRoles?: Role[];
+	permissionRequired?: Permission;
 }
 
-function NavItem({ label, icon, route, end, allowedRoles }: NavItemProps) {
+function NavItem({ label, icon, route, end, permissionRequired }: NavItemProps) {
 	const { hasAccessRights } = useAuth();
-	const auth = !allowedRoles || hasAccessRights(allowedRoles);
+	const auth = !permissionRequired || hasAccessRights(permissionRequired);
 	return auth ? (
 		<NavLink
 			end={end}

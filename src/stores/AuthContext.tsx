@@ -1,6 +1,7 @@
+import scoutFacade from "@/api/apiFoocleScout";
 import { createContext, useContext, useMemo, useReducer } from "react";
 import facade from "../api/apiFacade";
-import Role from "../types/entities/role";
+import Permission from "../types/entities/permission";
 import { getUserInfo } from "../utils/credentialHelper";
 
 type Action = {
@@ -9,8 +10,10 @@ type Action = {
 };
 
 type State = {
-	username: string;
-	roles: Role[];
+	email: string;
+	fname: string;
+	lname: string;
+	pms?: Permission;
 	loggedIn: boolean;
 };
 
@@ -33,7 +36,7 @@ function authReducer(state: State, action: Action): State {
 		}
 		case "logout": {
 			facade.logout();
-			return { ...state, username: "", roles: [], loggedIn: false };
+			return { ...state, email: "", pms: undefined, loggedIn: false };
 		}
 		default: {
 			throw new Error(`Unhandled action type: ${action.type}`);
@@ -42,7 +45,12 @@ function authReducer(state: State, action: Action): State {
 }
 
 function AuthProvider({ children }: AuthProviderProps) {
-	const [state, dispatch] = useReducer(authReducer, { username: "", roles: [], loggedIn: false });
+	const [state, dispatch] = useReducer(authReducer, {
+		email: "",
+		fname: "",
+		lname: "",
+		loggedIn: false,
+	});
 
 	const value = useMemo(() => ({ state, dispatch }), [state]);
 
@@ -58,11 +66,19 @@ function useAuth() {
 
 	const state = context.state;
 
-	const login = async (username: string, password: string) => {
+	const login = async (
+		email: string,
+		password: string,
+		type: "foocleBusiness" | "foocleScout"
+	) => {
 		try {
-			await facade.login(username, password);
+			if (type == "foocleBusiness") await facade.login(email, password);
+			else await scoutFacade.login(email, password);
 			context.dispatch({ type: "login" });
-		} catch {}
+			return Promise.resolve();
+		} catch (error: any) {
+			return Promise.reject(error);
+		}
 	};
 
 	const logout = () => {
@@ -88,16 +104,15 @@ function useAuth() {
 		}
 	};
 
-	const hasAccessRights = (allowedRoles: Role[]) => {
-		for (const role of state.roles) {
-			if (allowedRoles.includes(role)) return true;
-		}
-		return false;
+	const hasAccessRights = (permission: Permission) => {
+		let isAllowed = permission == state.pms;
+		if (permission == "FOOCLEBUSINESS" && state.pms == "BUSINESSADMIN") isAllowed = true;
+		return isAllowed;
 	};
 
-	const hasAccessRightsWithRevalidate = async (allowedRoles: Role[]) => {
+	const hasAccessRightsWithRevalidate = async (permission: Permission) => {
 		if (await revalidate()) {
-			return hasAccessRights(allowedRoles);
+			return hasAccessRights(permission);
 		}
 		return false;
 	};
