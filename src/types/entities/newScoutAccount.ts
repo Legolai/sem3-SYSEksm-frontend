@@ -1,5 +1,3 @@
-import User from "./user";
-
 interface NewScoutAccount {
   firstname: string;
   lastname: string;

@@ -1,19 +1,9 @@
-import NewScoutAccount from "@/types/entities/newScoutAccount";
-import Role from "@/types/entities/permission";
+import NewScoutAccount from "@/types/entities/newScoutAccount";;
 import { BASE_API_URL } from "../../settings";
-import WeatherNCat from "../types/entities/weatherNCat";
-import { makeOptions, setToken } from "./apibase";
+import { handleHttpErrors, makeOptions, setToken } from "./util.api";
 
 
-function handleHttpErrors(res: Response) {
-  if (!res.ok) {
-    return Promise.reject<{ status: string, fullError: {}; }>({ status: res.status, fullError: res.json() });
-  }
-  return Promise.resolve(res.json() as { [key: string]: any; });
-}
-
-
-function apiScoutFacade() {
+function getScoutAPI() {
 
   const createScoutAccount = async ({ ...props }: Omit<NewScoutAccount, "confirmPassword">) => {
     const options = makeOptions("POST", true, { ...props });
@@ -42,5 +32,5 @@ function apiScoutFacade() {
   };
 }
 
-const scoutFacade = apiScoutFacade();
-export default scoutFacade;
+const scoutAPI = getScoutAPI();
+export default scoutAPI;
