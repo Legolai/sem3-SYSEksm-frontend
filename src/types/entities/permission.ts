@@ -1,3 +1,3 @@
-type Permission = "FOOCLESCOUT" | "FOOCLEBUSINESS" | "BUSINESSADMIN";
+type Permission = "FOOCLESCOUT" | "BUSINESSACCOUNT" | "BUSINESSADMIN";
 
 export default Permission;

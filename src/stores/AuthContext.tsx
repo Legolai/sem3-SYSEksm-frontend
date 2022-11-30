@@ -106,7 +106,7 @@ function useAuth() {
 
 	const hasAccessRights = (permission: Permission) => {
 		let isAllowed = permission == state.pms;
-		if (permission == "FOOCLEBUSINESS" && state.pms == "BUSINESSADMIN") isAllowed = true;
+		if (permission == "BUSINESSACCOUNT" && state.pms == "BUSINESSADMIN") isAllowed = true;
 		return isAllowed;
 	};
 
