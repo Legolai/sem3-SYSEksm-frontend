@@ -24,7 +24,7 @@ const InputField = ({
 				</label>
 			)}
 			<input
-				className="bg-off-white outline-none border-b-2 border-b-third-500 border-b-solid rounded-lg px-4 py-2 w-full"
+				className="bg-off-white outline-none border-b-2 border-b-primary-500 border-b-solid rounded-lg px-4 py-2 w-full"
 				name={name}
 				value={value}
 				placeholder={placeholder}

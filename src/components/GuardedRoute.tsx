@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Unauthorized from "../pages/Unauthorized";
 import { useAuth } from "../stores/AuthContext";
-import Role from "../types/entities/role";
+import Permission from "../types/entities/permission";
 
 interface GuardedRouteProps {
-	allowedRoles: Role[];
+	permissionRequired: Permission;
 	refresh?: any;
 }
 
-function GuardedRoute({ allowedRoles, refresh }: GuardedRouteProps) {
+function GuardedRoute({ permissionRequired, refresh }: GuardedRouteProps) {
 	const [auth, setAuth] = useState(false);
 	const { state, hasAccessRightsWithRevalidate } = useAuth();
 
 	useEffect(() => {
 		const validate = async () => {
-			const allowed = await hasAccessRightsWithRevalidate(allowedRoles);
+			const allowed = await hasAccessRightsWithRevalidate(permissionRequired);
 			setAuth(allowed);
 		};
 		validate();

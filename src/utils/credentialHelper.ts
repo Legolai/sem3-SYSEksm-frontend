@@ -1,5 +1,6 @@
+import Token from "@/types/entities/token";
 import facade from "../api/apiFacade";
-import Role from "../types/entities/role";
+import Role from "../types/entities/permission";
 
 
 function decodeJwt() {
@@ -11,20 +12,31 @@ function decodeJwt() {
   return decodedJwtData;
 }
 
-function getUsername(jwt: {username: string}) {
-  return jwt && jwt.username;
+function getEmail(jwt: { email: string; }) {
+  return jwt && jwt.email;
 }
 
-function getUserRoles(jwt: {roles: string}) {
-  if (!jwt || !jwt.roles) return false;
-  return jwt.roles.split(",") as Role[];
+function getPermission(jwt: { pms: string; }) {
+  if (!jwt || !jwt.pms) return false;
+  return jwt.pms as Token["pms"];
 }
 
-function getUserInfo() {
+function getFname(jwt: { fname: string; }) {
+  return jwt && jwt.fname;
+}
+
+function getLname(jwt: { lname: string; }) {
+  return jwt && jwt.lname;
+}
+
+
+function getUserInfo(): Token {
   const jwtData = decodeJwt();
   return {
-    username: getUsername(jwtData),
-    roles: getUserRoles(jwtData) || []
+    email: getEmail(jwtData),
+    fname: getFname(jwtData),
+    lname: getLname(jwtData),
+    pms: getPermission(jwtData) || undefined
   };
 }
 

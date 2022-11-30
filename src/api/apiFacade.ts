@@ -1,4 +1,4 @@
-import Role from "@/types/entities/role";
+import Role from "@/types/entities/permission";
 import { BASE_API_URL } from "../../settings";
 import WeatherNCat from "../types/entities/weatherNCat";
 import { getToken, handleHttpErrors, makeOptions, setToken } from "./apibase";

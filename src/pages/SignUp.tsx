@@ -24,6 +24,7 @@ const SignUp = ({ afterSubmit }: SignUpProps) => {
 	]);
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setFormData(curr => ({ ...curr, [e.target.name]: e.target.value }));
+		if (e.target.name == "phoneNumber") setFormData(curr => ({ ...curr, areaCode: "+45" }));
 	};
 
 	const onReset = () => {
@@ -36,7 +37,6 @@ const SignUp = ({ afterSubmit }: SignUpProps) => {
 		// doValidation();
 
 		if (isOk()) {
-			setFormData(curr => ({ ...curr, areaCode: "+45" }));
 			await facade.createScoutAccount(formData);
 			onReset();
 		}
@@ -50,7 +50,6 @@ const SignUp = ({ afterSubmit }: SignUpProps) => {
 					<div className="w-full bg-red-400 text-white rounded-md p-2 px-3">{alert}</div>
 				)}
 				<form
-					noValidate
 					onSubmit={onSubmit}
 					className="flex flex-col justify-center items-center w-full gap-5"
 				>
@@ -83,7 +82,7 @@ const SignUp = ({ afterSubmit }: SignUpProps) => {
 							onChange={onChange}
 							label="Phone"
 							type="tel"
-							name="phone"
+							name="phoneNumber"
 							required
 							errorMsg={getErrorMsg("phone")}
 						/>
