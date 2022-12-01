@@ -1,4 +1,5 @@
 import scoutFacade from "@/api/apiFoocleScout";
+import businessFacade from "@/api/apiFoocleBusiness";
 import { createContext, useContext, useMemo, useReducer } from "react";
 import facade from "../api/apiFacade";
 import Permission from "../types/entities/permission";
@@ -72,7 +73,7 @@ function useAuth() {
 		type: "foocleBusiness" | "foocleScout"
 	) => {
 		try {
-			if (type == "foocleBusiness") await facade.login(email, password);
+			if (type == "foocleBusiness") await businessFacade.login(email, password);
 			else await scoutFacade.login(email, password);
 			context.dispatch({ type: "login" });
 			return Promise.resolve();

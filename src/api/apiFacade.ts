@@ -39,17 +39,25 @@ function apiFacade() {
 
   const fetchUserGreeting = async () => {
     const options = makeOptions("GET", true);
-    const res = await fetch(BASE_API_URL + "/info/user", options);
+    const res = await fetch(BASE_API_URL + "/info/scout", options);
     const data = await handleHttpErrors(res);
     return data.msg;
   };
 
   const fetchAdminGreeting = async () => {
     const options = makeOptions("GET", true);
-    const res = await fetch(BASE_API_URL + "/info/admin", options);
+    const res = await fetch(BASE_API_URL + "/info/business", options);
     const data = await handleHttpErrors(res);
     return data.msg;
   };
+
+  const fetchAnonymousGreeting = async () => {
+    const options = makeOptions("GET", true);
+    const res = await fetch(BASE_API_URL + "/info/", options);
+    const data = await handleHttpErrors(res);
+    return data.msg;
+  };
+
 
   const fetchWeatherNCat = async (): Promise<WeatherNCat> => {
     const options = makeOptions("GET", true);
@@ -68,6 +76,7 @@ function apiFacade() {
     logout,
     fetchUserGreeting,
     fetchAdminGreeting,
+    fetchAnonymousGreeting,
     fetchWeatherNCat,
     validateToken,
   };

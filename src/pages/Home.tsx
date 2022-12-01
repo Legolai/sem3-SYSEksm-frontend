@@ -9,9 +9,11 @@ function Home() {
 	useEffect(() => {
 		const getGreeting = async () => {
 			let newGreeting = "Welcome!";
-			if (authState.roles.includes("admin")) newGreeting = await facade.fetchAdminGreeting();
-			else if (authState.roles.includes("user"))
-				newGreeting = await facade.fetchUserGreeting();
+			// if (authState.roles.includes("admin")) newGreeting = await facade.fetchAdminGreeting();
+			// else if (authState.roles.includes("user"))
+			// 	newGreeting = await facade.fetchUserGreeting();
+
+			newGreeting = await facade.fetchAnonymousGreeting();
 			setGreeting(newGreeting);
 		};
 		getGreeting();

@@ -4,6 +4,7 @@ import { Button, InputField } from "@/components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Tabs from "@/components/Tabs.js";
 import TheFoocleScoutLogin from "@/components/TheFoocleScoutLogin.js";
+import TheFoocleBusinessLogin from "../components/TheFoocleBusinessLogin";
 
 interface SignInProps {
 	setErrorMsg?: () => void;
@@ -29,7 +30,7 @@ function SignIn({ setErrorMsg }: SignInProps) {
 						},
 						{
 							name: "FoocleBusiness",
-							content: TheFoocleScoutLogin(),
+							content: TheFoocleBusinessLogin(),
 						},
 					]}
 				/>
