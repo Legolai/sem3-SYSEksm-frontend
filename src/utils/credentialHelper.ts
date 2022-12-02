@@ -13,19 +13,19 @@ function decodeJwt() {
   return decodedJwtData;
 }
 
+function getID(jwt: { ID: string; }) {
+  return jwt && jwt.ID;
+}
 function getEmail(jwt: { email: string; }) {
   return jwt && jwt.email;
 }
-
 function getPermission(jwt: { pms: string; }) {
   if (!jwt || !jwt.pms) return false;
   return jwt.pms as Permission;
 }
-
 function getFname(jwt: { fname: string; }) {
   return jwt && jwt.fname;
 }
-
 function getLname(jwt: { lname: string; }) {
   return jwt && jwt.lname;
 }
@@ -34,6 +34,7 @@ function getLname(jwt: { lname: string; }) {
 function getUserInfo(): Token {
   const jwtData = decodeJwt();
   return {
+    ID: getID(jwtData),
     email: getEmail(jwtData),
     fname: getFname(jwtData),
     lname: getLname(jwtData),

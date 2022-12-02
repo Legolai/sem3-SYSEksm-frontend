@@ -1,4 +1,4 @@
-import User from "./user";
+
 
 interface NewBusinessAccount {
   firstname: string;
