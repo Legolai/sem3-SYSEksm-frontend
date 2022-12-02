@@ -10,6 +10,7 @@ import User from "./pages/User";
 import { useAuth } from "./stores/AuthContext";
 import SignUpBusiness from "./pages/SignUpBusiness";
 import SignUpBusinessAccount from "./pages/SignUpBusinessAccount";
+import CreateFoocleSpot from "@/pages/CreateFoocleSpot";
 function App() {
 	const { autoLogin, state: authState } = useAuth();
 	const navigate = useNavigate();
@@ -23,6 +24,7 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/createFoocleSpot" element={<CreateFoocleSpot />} />
 				<Route
 					path="/persons"
 					element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}

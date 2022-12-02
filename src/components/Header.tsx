@@ -17,12 +17,17 @@ function Header({ setErrorMsg }: HeaderProps) {
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem
+					permissionRequired={"BUSINESSADMIN"}
+					route={"/createFoocleSpot"}
+					icon={"book"}
+					label={"Create a FoocleSpot"}
+				/>
+				<NavItem
 					permissionRequired={"BUSINESSACCOUNT"}
 					route={"/persons"}
 					icon={"users"}
 					label={"Persons"}
 				/>
-				<NavItem route={"/example-page"} icon={"book"} label={"Example"} />
 
 				<div className="ml-auto mr-2 flex items-center gap-2 justify-center">
 					{!state.loggedIn ? (

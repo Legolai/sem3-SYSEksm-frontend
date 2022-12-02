@@ -1,4 +1,3 @@
-interface SignUpProps {}
 
 import facade from "@/api/apiCVR";
 import { Button, InputField } from "@/components";
