@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import facade from "../api/apiFacade.js";
+import facade from "../api/apiFoocleBusiness.js";
 import { useAuth } from "../stores/AuthContext.js";
 import Button from "./Button.js";
 
@@ -14,7 +14,9 @@ function LoggedIn() {
 
 	return (
 		<div>
-			<Button outline onClick={onLogout}>Log Out</Button>
+			<Button outline onClick={onLogout}>
+				Log Out
+			</Button>
 		</div>
 	);
 }
