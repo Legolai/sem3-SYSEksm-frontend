@@ -1,8 +1,7 @@
-import { useMemo, useReducer, useState } from "react";
-import { cursorTo } from "readline";
+import { useMemo, useReducer } from "react";
 
 interface ValidationElement {
-  expression: boolean;
+  expression: () => boolean;
   inputName: string;
   msg: string;
 }
@@ -15,8 +14,6 @@ type Action = {
   type: "reset";
 };
 
-type Dispatch = (action: Action) => void;
-
 
 function validationReducer(state: { [key: string]: string[]; }, action: Action): { [key: string]: string[]; } {
   switch (action.type) {
@@ -24,7 +21,7 @@ function validationReducer(state: { [key: string]: string[]; }, action: Action):
       const todo = (action.inputName && action.inputName.length != 0) ? action.validationItems.filter(i => i.inputName === action.inputName) : action.validationItems;
       let curr = state;
       for (const item of todo) {
-        if (item.expression) {
+        if (item.expression()) {
           const array = curr[item.inputName] || [];
           array.push(item.msg);
           curr = { ...curr, [item.inputName]: array };

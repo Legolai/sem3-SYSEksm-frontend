@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { redirect, Route, Routes, useNavigate } from "react-router-dom";
 import GuardedRoute from "./components/GuardedRoute";
 import Header from "./components/Header";
-import ExamplePage from "./pages/ExamplePage";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -21,12 +20,15 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/persons" element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}>
+				<Route
+					path="/persons"
+					element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}
+				>
 					<Route index element={<User />} />
 				</Route>
 				<Route path="/signin" element={<SignIn />} />
 				<Route path="/signup" element={<SignUp />} />
-				<Route path="/example-page" element={<ExamplePage />} />
+				<Route path="/example-page" element={<div />} />
 				<Route path="*" element={<h1>404 Page Not Found !!!!</h1>} />
 			</Routes>
 		</div>

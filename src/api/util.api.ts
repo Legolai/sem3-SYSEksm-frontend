@@ -48,7 +48,6 @@ function makeOptions<T>(method: string, addToken: boolean, body?: T) {
   return opts;
 }
 
-
 export {
   makeOptions,
   loggedIn,

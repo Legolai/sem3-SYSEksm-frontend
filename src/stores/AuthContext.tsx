@@ -1,6 +1,5 @@
-import scoutFacade from "@/api/apiFoocleScout";
+import API from "@/api";
 import { createContext, useContext, useMemo, useReducer } from "react";
-import facade from "../api/apiFacade";
 import Permission from "../types/entities/permission";
 import { getUserInfo } from "../utils/credentialHelper";
 
@@ -35,7 +34,7 @@ function authReducer(state: State, action: Action): State {
 			return { ...state, loggedIn: true, ...user };
 		}
 		case "logout": {
-			facade.logout();
+			API.helpers.logout();
 			return { ...state, email: "", pms: undefined, loggedIn: false };
 		}
 		default: {
@@ -72,8 +71,8 @@ function useAuth() {
 		type: "foocleBusiness" | "foocleScout"
 	) => {
 		try {
-			if (type == "foocleBusiness") await facade.login(email, password);
-			else await scoutFacade.login(email, password);
+			if (type == "foocleBusiness") await API.business.login(email, password);
+			else await API.scout.login(email, password);
 			context.dispatch({ type: "login" });
 			return Promise.resolve();
 		} catch (error: any) {
@@ -89,7 +88,7 @@ function useAuth() {
 		if (!state.loggedIn) return false;
 
 		try {
-			const isValid = await facade.validateToken();
+			const isValid = await API.helpers.validateToken();
 			if (!isValid) throw new Error();
 			return true;
 		} catch {
@@ -99,7 +98,7 @@ function useAuth() {
 	};
 
 	const autoLogin = async () => {
-		if (facade.getToken() && (await facade.validateToken())) {
+		if (API.helpers.getToken() && (await API.helpers.validateToken())) {
 			context.dispatch({ type: "login" });
 		}
 	};

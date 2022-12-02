@@ -1,5 +1,5 @@
 import { useAuth } from "@/stores/AuthContext";
-import PerformLoginAction from "@/types/entities/peformLoginAction";
+import PerformLoginAction from "@/types/entities/performLoginAction";
 import TheLoginForm from "./TheLoginForm";
 
 function TheFoocleScoutLogin() {

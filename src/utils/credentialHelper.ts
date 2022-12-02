@@ -1,10 +1,11 @@
 import Token from "@/types/entities/token";
-import facade from "../api/apiFacade";
+import API from "@/api/";
+import Permission from "../types/entities/permission";
 import Role from "../types/entities/permission";
 
 
 function decodeJwt() {
-  const token = facade.getToken();
+  const token = API.helpers.getToken();
   if (!token) return undefined;
   const jwtData = token.split(".")[1];
   const decodedJwtJsonData = window.atob(jwtData);
@@ -18,7 +19,7 @@ function getEmail(jwt: { email: string; }) {
 
 function getPermission(jwt: { pms: string; }) {
   if (!jwt || !jwt.pms) return false;
-  return jwt.pms as Token["pms"];
+  return jwt.pms as Permission;
 }
 
 function getFname(jwt: { fname: string; }) {

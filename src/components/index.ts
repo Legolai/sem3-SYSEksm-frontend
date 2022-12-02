@@ -4,4 +4,4 @@ export { default as GuardedRoute } from "./GuardedRoute";
 export { default as InputField } from "./InputField";
 export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as NavItem } from "./NavItem";
-export { default as WeatherInfoBox } from "./WeatherInfoBox";
+
