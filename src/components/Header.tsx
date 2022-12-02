@@ -17,7 +17,7 @@ function Header({ setErrorMsg }: HeaderProps) {
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem
-					allowedRoles={["admin"]}
+					permissionRequired={"BUSINESSACCOUNT"}
 					route={"/persons"}
 					icon={"users"}
 					label={"Persons"}
@@ -46,22 +46,15 @@ function Header({ setErrorMsg }: HeaderProps) {
 								<p className="px-4 flex gap-1 justify-center items-center">
 									<i className="fa fa-fw fa-user"></i>
 									<p>
-										{state.username.charAt(0).toUpperCase() +
-											state.username.substring(1)}
+										{state.fname.charAt(0).toUpperCase() +
+											state.fname.substring(1) +
+											" " +
+											state.lname}
 									</p>
 								</p>
 								<p className="px-4 flex gap-1 justify-center items-center">
 									<i className="fa fa-address-card-o"></i>
-									<p>
-										{"[ " +
-											state.roles.map(
-												(r, i) =>
-													(i > 0 ? " " : "") +
-													r.charAt(0).toUpperCase() +
-													r.substring(1)
-											) +
-											" ]"}
-									</p>
+									<p>{state.pms}</p>
 								</p>
 							</div>
 							<LoggedIn />

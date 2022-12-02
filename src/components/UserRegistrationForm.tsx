@@ -1,7 +1,7 @@
 import InputField from "./InputField";
 import Button from "./Button";
 import { ChangeEvent, FormEvent, useState } from "react";
-import NewUser, { initialNewUser } from "../types/entities/newUser";
+import NewUser, { initialNewUser } from "../types/entities/newScoutAccount";
 
 interface UserRegistrationFromProps {
 	afterSubmit?: () => void;
@@ -15,7 +15,7 @@ const UserRegistrationForm = ({ afterSubmit }: UserRegistrationFromProps) => {
 			return { ...curr, [e.target.name]: e.target.value };
 		});
 	};
-	
+
 	const onReset = () => {
 		setFormData(initialNewUser);
 	};

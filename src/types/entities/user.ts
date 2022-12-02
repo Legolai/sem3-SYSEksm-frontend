@@ -1,4 +1,4 @@
-import Role from "./role";
+import Role from "./permission";
 
 interface User {
   userName: string;

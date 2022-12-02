@@ -6,8 +6,11 @@ import ExamplePage from "./pages/ExamplePage";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import SignUpScout from "./pages/SignUpScout";
 import User from "./pages/User";
 import { useAuth } from "./stores/AuthContext";
+import SignUpBusiness from "./pages/SignUpBusiness";
+import SignUpBusinessAccount from "./pages/SignUpBusinessAccount";
 function App() {
 	const { autoLogin, state: authState } = useAuth();
 	const navigate = useNavigate();
@@ -21,11 +24,14 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/persons" element={<GuardedRoute allowedRoles={["admin"]} />}>
+				<Route path="/persons" element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}>
 					<Route index element={<User />} />
 				</Route>
 				<Route path="/signin" element={<SignIn />} />
 				<Route path="/signup" element={<SignUp />} />
+				<Route path="/signup/scout" element={<SignUpScout />} />
+				<Route path="/signup/business" element={<SignUpBusiness />} />
+				<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
 				<Route path="/example-page" element={<ExamplePage />} />
 				<Route path="*" element={<h1>404 Page Not Found !!!!</h1>} />
 			</Routes>
