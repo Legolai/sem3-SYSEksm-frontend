@@ -5,8 +5,11 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import SignUpScout from "./pages/SignUpScout";
 import User from "./pages/User";
 import { useAuth } from "./stores/AuthContext";
+import SignUpBusiness from "./pages/SignUpBusiness";
+import SignUpBusinessAccount from "./pages/SignUpBusinessAccount";
 function App() {
 	const { autoLogin, state: authState } = useAuth();
 	const navigate = useNavigate();
@@ -28,7 +31,10 @@ function App() {
 				</Route>
 				<Route path="/signin" element={<SignIn />} />
 				<Route path="/signup" element={<SignUp />} />
-				<Route path="/example-page" element={<div />} />
+				<Route path="/signup/scout" element={<SignUpScout />}/>
+				<Route path="/signup/business" element={<SignUpBusiness />} />
+				<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
+
 				<Route path="*" element={<h1>404 Page Not Found !!!!</h1>} />
 			</Routes>
 		</div>
