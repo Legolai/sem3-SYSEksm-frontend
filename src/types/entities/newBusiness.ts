@@ -1,5 +1,3 @@
-import User from "./user";
-
 interface NewBusiness {
   cvr: string;
   name: string;

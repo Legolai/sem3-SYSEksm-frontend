@@ -1,6 +1,6 @@
 import {BASE_CVR_URL} from "../../settings";
 import NewBusiness from "../types/entities/newBusiness";
-import {getToken, handleHttpErrors, makeOptions, setToken} from "./apibase";
+import {getToken, handleHttpErrors, makeOptions, setToken} from "./util.api";
 
 function apiCVR() {
 

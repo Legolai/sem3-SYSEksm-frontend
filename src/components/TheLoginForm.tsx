@@ -1,4 +1,4 @@
-import PerformLoginAction from "@/types/entities/peformLoginAction";
+import PerformLoginAction from "@/types/entities/performLoginAction";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "./Button";
 import InputField from "./InputField";

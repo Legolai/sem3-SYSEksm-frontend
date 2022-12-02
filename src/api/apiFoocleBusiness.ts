@@ -1,21 +1,11 @@
 import newBusinessAccount from "@/types/entities/newBusinessAccount";
-import Role from "@/types/entities/permission";
 import { BASE_API_URL } from "../../settings";
-import {makeOptions, setToken} from "./apibase";
+import { getToken, handleHttpErrors, makeOptions, setToken } from "./util.api";
 
+function getBusinessAPI() {
 
-function handleHttpErrors(res: Response) {
-  if (!res.ok) {
-    return Promise.reject<{ status: string, fullError: {}; }>({ status: res.status, fullError: res.json() });
-  }
-  return Promise.resolve(res.json() as { [key: string]: any; });
-}
-
-
-function apiBusinessFacade() {
-
-  const createBusinessAdminAccount = async ({ ...props }: Omit<newBusinessAccount, "password">) => {
-    const options = makeOptions("POST", true, { ...props });
+  const createBusinessAdminAccount = async ({...props}: Omit<newBusinessAccount, "password">) => {
+    const options = makeOptions("POST", true, {...props});
     const res = await fetch(`${BASE_API_URL}/business`, options);
     const data = await handleHttpErrors(res);
     return data;
@@ -33,11 +23,14 @@ function apiBusinessFacade() {
     }
   };
 
+
+
+
   return {
     createBusinessAdminAccount,
-    login
+    login,
   };
 }
 
-const businessFacade = apiBusinessFacade();
-export default businessFacade;
+const businessAPI = getBusinessAPI();
+export default businessAPI;
