@@ -30,11 +30,10 @@ function App() {
 					<Route index element={<User />} />
 				</Route>
 				<Route path="/signin" element={<SignIn />} />
-				<Route path="/signup" element={<SignUp />} >
-					<Route path="/scout" element={<SignUpScout />}/>
-					<Route path="/business" element={<SignUpBusiness />} />
-					<Route path="/business/account" element={<SignUpBusinessAccount />} />
-				</Route>
+				<Route path="/signup" element={<SignUp />} />
+				<Route path="/signup/scout" element={<SignUpScout />}/>
+				<Route path="/signup/business" element={<SignUpBusiness />} />
+				<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
 
 				<Route path="*" element={<h1>404 Page Not Found !!!!</h1>} />
 			</Routes>

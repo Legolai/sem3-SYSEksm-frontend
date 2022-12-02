@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { initialNewBusinessAccount } from "../types/entities/newBusinessAccount";
 import NewBusiness from "../types/entities/newBusiness";
 import {useLocation} from "react-router-dom";
-import businessFacade from "../api/apiFoocleBusiness";
+import API from "@/api/index"
 
 interface SignUpProps {
 	afterSubmit?: () => void;
@@ -48,7 +48,8 @@ const SignUpBusinessAccount = ({ afterSubmit }: SignUpProps) => {
 
 		if (isOk()) {
 			try {
-				const createBusiness = await businessFacade.createBusinessAdminAccount(formData);
+				const createBusiness = await API.business.createBusinessAdminAccount(formData);
+				console.log(createBusiness)
 				navigate("/signin")
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;
