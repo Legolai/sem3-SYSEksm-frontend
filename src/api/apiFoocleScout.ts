@@ -24,8 +24,6 @@ function getScoutAPI() {
     }
   };
 
-
-
   return {
     createScoutAccount,
     login
