@@ -1,4 +1,4 @@
-import { useAuth } from "@/stores/AuthContext";
+import { useAuth } from "@/hooks/AuthContext";
 import PerformLoginAction from "@/types/entities/performLoginAction";
 import TheLoginForm from "./TheLoginForm";
 

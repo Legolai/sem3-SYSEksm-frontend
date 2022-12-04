@@ -6,7 +6,8 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import User from "./pages/User";
-import { useAuth } from "./stores/AuthContext";
+import ViewFoocleSpotPage from "./pages/ViewFoocleSpotPage";
+import { useAuth } from "./hooks/AuthContext";
 function App() {
 	const { autoLogin, state: authState } = useAuth();
 	const navigate = useNavigate();
@@ -20,6 +21,9 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/scout" element={<GuardedRoute permissionRequired={"FOOCLESCOUT"} />}>
+					<Route path="fooclespots" element={<ViewFoocleSpotPage />} />
+				</Route>
 				<Route
 					path="/persons"
 					element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}

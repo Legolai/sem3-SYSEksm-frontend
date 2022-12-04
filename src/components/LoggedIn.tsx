@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import facade from "../api/apiFoocleBusiness.js";
-import { useAuth } from "../stores/AuthContext.js";
+import { useAuth } from "../hooks/AuthContext.js";
 import Button from "./Button.js";
 
 function LoggedIn() {

@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import { useAuth } from "../stores/AuthContext.js";
+import { useAuth } from "../hooks/AuthContext.js";
 import { Button, InputField } from "@/components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Tabs from "@/components/Tabs.js";
