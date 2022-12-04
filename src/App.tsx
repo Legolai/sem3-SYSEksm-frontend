@@ -11,6 +11,7 @@ import SignUpBusinessAccount from "./pages/SignUpBusinessAccount";
 import CreateFoocleSpot from "@/pages/CreateFoocleSpot";
 import User from "./pages/User";
 import { useAuth } from "./hooks/AuthContext";
+import ViewFoocleSpotPage from "./pages/ViewFoocleSpotPage";
 function App() {
 	const { autoLogin, state: authState } = useAuth();
 	const navigate = useNavigate();
@@ -36,7 +37,7 @@ function App() {
 				</Route>
 				<Route path="/signin" element={<SignIn />} />
 				<Route path="/signup" element={<SignUp />} />
-				<Route path="/signup/scout" element={<SignUpScout />}/>
+				<Route path="/signup/scout" element={<SignUpScout />} />
 				<Route path="/signup/business" element={<SignUpBusiness />} />
 				<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
 
