@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../stores/AuthContext";
+import { useAuth } from "../hooks/AuthContext";
 import Permission from "../types/entities/permission";
 
 interface NavItemProps {

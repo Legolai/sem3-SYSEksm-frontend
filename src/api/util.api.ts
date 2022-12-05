@@ -6,11 +6,11 @@ function handleHttpErrors(res: Response) {
 }
 
 const setToken = (token: string) => {
-  sessionStorage.setItem("jwtToken", token);
+  localStorage.setItem("jwtToken", token);
 };
 
 const getToken = () => {
-  const value = sessionStorage.getItem("jwtToken");
+  const value = localStorage.getItem("jwtToken");
   if (value == null) return undefined;
   return value;
 };
@@ -20,7 +20,7 @@ const loggedIn = () => {
 };
 
 
-function makeOptions<T>(method: string, addToken: boolean, body?: T) {
+function makeOptions<T>(method: "GET" | "POST" | "DELETE" | "PUT" | "HEAD", addToken: boolean, body?: T) {
   method = method ? method : "GET";
   const opts: {
     method: string,
@@ -51,7 +51,7 @@ function makeOptions<T>(method: string, addToken: boolean, body?: T) {
 export {
   makeOptions,
   loggedIn,
-  getToken, 
+  getToken,
   handleHttpErrors,
   setToken
-}
+};
