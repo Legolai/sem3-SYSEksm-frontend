@@ -32,6 +32,12 @@ function getBusinessAPI() {
     const data = await handleHttpErrors(res);
     return data;
   }
+  const businessGetFoocleSpots = async (cvr: number) => {
+    const options = makeOptions("GET", true, {cvr});
+    const res = await fetch(`${BASE_API_URL}/business/foocleSpot`, options);
+    const data = await handleHttpErrors(res);
+    return data;
+  }
 
 
 
@@ -39,7 +45,8 @@ function getBusinessAPI() {
   return {
     login,
     createBusinessAdminAccount,
-    createFoocleSpot
+    createFoocleSpot,
+    businessGetFoocleSpots
   };
 }
 

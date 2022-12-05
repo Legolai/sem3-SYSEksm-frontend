@@ -10,7 +10,7 @@ interface SignUpProps {
 	afterSubmit?: () => void;
 }
 
-const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
+const createFoocleSpot = ({ afterSubmit }: SignUpProps) => {
 	const { state } = useAuth();
 	const init = { businessAccountID: state.ID, address: "", city: "", zipCode: "", country: "" };
 	const [formData, setFormData] = useState(init);
@@ -124,4 +124,4 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 	);
 };
 
-export default SignUpBusiness;
+export default createFoocleSpot;
