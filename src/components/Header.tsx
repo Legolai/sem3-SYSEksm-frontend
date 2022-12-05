@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import LoggedIn from "./LoggedIn";
 import NavItem from "./NavItem";
-import { useAuth } from "../stores/AuthContext.js";
+import { useAuth } from "../hooks/AuthContext.js";
 import Logo from "./Logo";
 
 interface HeaderProps {
@@ -17,12 +17,23 @@ function Header({ setErrorMsg }: HeaderProps) {
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem
+					permissionRequired={"BUSINESSADMIN"}
+					route={"/createFoocleSpot"}
+					icon={"book"}
+					label={"Create a FoocleSpot"}
+				/>
+				<NavItem
 					permissionRequired={"BUSINESSACCOUNT"}
 					route={"/persons"}
 					icon={"users"}
 					label={"Persons"}
 				/>
-				<NavItem route={"/example-page"} icon={"book"} label={"Example"} />
+				<NavItem
+					permissionRequired={"FOOCLESCOUT"}
+					route={"/scout/fooclespots"}
+					icon={"map"}
+					label={"Map"}
+				/>
 
 				<div className="ml-auto mr-2 flex items-center gap-2 justify-center">
 					{!state.loggedIn ? (
