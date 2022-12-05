@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../stores/AuthContext";
+import { useAuth } from "../hooks/AuthContext";
 
 function Home() {
 	const { state: authState } = useAuth();

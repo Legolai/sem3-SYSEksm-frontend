@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Unauthorized from "../pages/Unauthorized";
-import { useAuth } from "../stores/AuthContext";
+import { useAuth } from "../hooks/AuthContext";
 import Permission from "../types/entities/permission";
 
 interface GuardedRouteProps {

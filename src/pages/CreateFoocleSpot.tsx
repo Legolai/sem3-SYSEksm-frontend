@@ -1,10 +1,9 @@
-
 import { Button, InputField } from "@/components";
 import { useValidator } from "@/utils/validationHelper";
-import { FocusEvent ,ChangeEvent, FormEvent, useEffect, useState} from "react";
+import { FocusEvent, ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "@/api";
-import {useAuth} from "../stores/AuthContext";
+import { useAuth } from "../hooks/AuthContext";
 
 interface SignUpProps {
 	afterSubmit?: () => void;
@@ -24,29 +23,28 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 		// },
 	]);
 
-
 	const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
-		setFormData((curr: any) => ({...curr, [e.target.name]: e.target.value}));
+		setFormData((curr: any) => ({ ...curr, [e.target.name]: e.target.value }));
 	};
 
 	const onReset = () => {
 		setFormData(init);
 		setAlert("");
 		const inputs = document.querySelectorAll(`input`);
-		inputs.forEach(input => input.disabled = false)
-		navigate("/createFoocleSpot", {replace: true});
+		inputs.forEach(input => (input.disabled = false));
+		navigate("/createFoocleSpot", { replace: true });
 	};
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		console.log(formData)
+		console.log(formData);
 		e.preventDefault();
 		// doValidation();
 
 		if (isOk()) {
 			try {
 				const createFoocleSpot = await API.business.createFoocleSpot(formData);
-				console.log(createFoocleSpot)
-				navigate("/createFoocleSpot")
+				console.log(createFoocleSpot);
+				navigate("/createFoocleSpot");
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;
 				console.log(errMsgFull.message);
@@ -61,11 +59,11 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 				<div className="h-">
 					<h2 className="text-2xl font-bold">Create a FoocleSpot</h2>
 					{alert.length > 0 && (
-						<div className="w-full bg-red-400 text-white rounded-md p-2 px-3">{alert}</div>
+						<div className="w-full bg-red-400 text-white rounded-md p-2 px-3">
+							{alert}
+						</div>
 					)}
-					<h3 className="">
-						Enter the location of your FoocleSpot!
-					</h3>
+					<h3 className="">Enter the location of your FoocleSpot!</h3>
 					<form
 						noValidate
 						onSubmit={onSubmit}

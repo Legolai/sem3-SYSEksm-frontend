@@ -6,11 +6,12 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import SignUpScout from "./pages/SignUpScout";
-import User from "./pages/User";
-import { useAuth } from "./stores/AuthContext";
 import SignUpBusiness from "./pages/SignUpBusiness";
 import SignUpBusinessAccount from "./pages/SignUpBusinessAccount";
 import CreateFoocleSpot from "@/pages/CreateFoocleSpot";
+import User from "./pages/User";
+import { useAuth } from "./hooks/AuthContext";
+import ViewFoocleSpotPage from "./pages/ViewFoocleSpotPage";
 function App() {
 	const { autoLogin, state: authState } = useAuth();
 	const navigate = useNavigate();
@@ -24,6 +25,9 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/scout" element={<GuardedRoute permissionRequired={"FOOCLESCOUT"} />}>
+					<Route path="fooclespots" element={<ViewFoocleSpotPage />} />
+				</Route>
 				<Route path="/createFoocleSpot" element={<CreateFoocleSpot />} />
 				<Route
 					path="/persons"
@@ -33,7 +37,7 @@ function App() {
 				</Route>
 				<Route path="/signin" element={<SignIn />} />
 				<Route path="/signup" element={<SignUp />} />
-				<Route path="/signup/scout" element={<SignUpScout />}/>
+				<Route path="/signup/scout" element={<SignUpScout />} />
 				<Route path="/signup/business" element={<SignUpBusiness />} />
 				<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
 

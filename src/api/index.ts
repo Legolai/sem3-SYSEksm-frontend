@@ -1,6 +1,7 @@
 import { BASE_API_URL } from "../../settings";
 import businessAPI from "./apiFoocleBusiness";
 import scoutAPI from "./apiFoocleScout";
+import fSpotAPI from "./apiFoocleSpot";
 import { getToken, makeOptions, loggedIn } from "./util.api";
 
 async function validateToken() {
@@ -13,12 +14,13 @@ async function validateToken() {
 };
 
 function logout() {
-  sessionStorage.removeItem("jwtToken");
+  localStorage.removeItem("jwtToken");
 };
 
 const API = {
   business: businessAPI,
   scout: scoutAPI,
+  spot: fSpotAPI,
   helpers: {
     validateToken,
     logout,
