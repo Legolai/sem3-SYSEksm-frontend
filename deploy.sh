@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_NAME="react-frontend"
+PROJECT_NAME="foocle"
 # DROPLET_URL="YOUR_WEBSITE_URL"
 # echo -n "please enter the project name as it appears on the server in /var/www/"
 # read -r 
