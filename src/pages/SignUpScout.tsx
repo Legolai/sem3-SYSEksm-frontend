@@ -17,7 +17,7 @@ const SignUpScout = ({ afterSubmit }: SignUpProps) => {
 	const [alert, setAlert] = useState("");
 	const { validationState, isOk, doValidation, getErrorMsg } = useValidator([
 		{
-			expression: formData.firstname.trim().length == 0,
+			expression: () => formData.firstname.trim().length == 0,
 			inputName: "firstname",
 			msg: "This field is required",
 		},
