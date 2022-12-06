@@ -1,20 +1,21 @@
-
 import facade from "@/api/apiCVR";
 import { Button, InputField } from "@/components";
 import { useValidator } from "@/utils/validationHelper";
-import { FocusEvent ,ChangeEvent, FormEvent, useEffect, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import NewBusiness, {initialNewBusiness} from "../types/entities/newBusiness";
+import { FocusEvent, ChangeEvent, FormEvent, useEffect, useState, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import NewBusiness, { initialNewBusiness } from "../types/entities/newBusiness";
 
 interface SignUpProps {
 	afterSubmit?: () => void;
 }
 
 const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
-	const businessFromLocation = useLocation()
+	const businessFromLocation = useLocation();
 	const [formData, setFormData] = useState(initialNewBusiness);
 	const navigate = useNavigate();
 	const [alert, setAlert] = useState("");
+	const cvrInputRef = useRef<HTMLInputElement>(null);
+	const formRef = useRef<HTMLFormElement>(null);
 	const { validationState, isOk, doValidation, getErrorMsg } = useValidator([
 		// {
 		// 	expression: formData.cvr.trim().length == 0,
@@ -23,13 +24,15 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 		// },
 	]);
 	const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
-		setFormData((curr: any) => ({...curr, [e.target.name]: e.target.value}));
-		if (e.currentTarget.name === 'cvr') {
-			const cvr: string | null = e.currentTarget.value.length == 8 && Number(e.currentTarget.value) ? e.currentTarget.value : null;
+		setFormData((curr: any) => ({ ...curr, [e.target.name]: e.target.value }));
+		if (e.currentTarget.name === "cvr") {
+			const cvr: string | null =
+				e.currentTarget.value.length == 8 && Number(e.currentTarget.value)
+					? e.currentTarget.value
+					: null;
 			if (cvr) {
 				await fetchCVR(cvr);
 			} else {
-
 			}
 		}
 	};
@@ -38,43 +41,50 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 		setFormData(initialNewBusiness);
 		setAlert("");
 		const inputs = document.querySelectorAll(`input`);
-		inputs.forEach(input => input.disabled = false)
-		navigate("/signup/business", {replace: true});
-
+		inputs.forEach(input => (input.disabled = false));
+		navigate("/signup/business", { replace: true });
 	};
 
-	useEffect( () => {
+	useEffect(() => {
 		if (businessFromLocation.state && businessFromLocation.state.cvr.length > 0) {
-			const input = document.querySelector(`input[name=cvr]`);
 			const cvr = businessFromLocation.state.cvr;
-			input.focus()
-			input.value = cvr;
-			input.blur();
-
+			console.log();
+			if (cvrInputRef.current) {
+				cvrInputRef.current.focus();
+				cvrInputRef.current.value = cvr;
+				cvrInputRef.current.blur();
+			}
 		} else {
-			console.log("onload", formData)
+			console.log("onload", formData);
 		}
-	}, [businessFromLocation])
+	}, [businessFromLocation]);
 
 	async function fetchCVR(cvr: string) {
-		const business: NewBusiness = await facade.fetchBizz(cvr);
+		const business = await facade.fetchBizz(cvr);
+		let form = formRef.current?.getElementsByTagName("input")!;
+		console.log(form);
 		for (const key in business) {
-			let input: HTMLInputElement | null = document.querySelector(`input[name=${key}]`);
-			if (input && key !== 'cvr' ){
+			let input = form.namedItem(key) as HTMLInputElement;
+			console.log(input);
+			if (input && key !== "cvr") {
 				input.value = business[key];
 				input.disabled = true;
 			}
 		}
-		setFormData(business)
+		setFormData(business);
 	}
 
 	const onBlur = async (e: FocusEvent<HTMLInputElement>) => {
-		const cvr = e.currentTarget.value.length == 8 && Number(e.currentTarget.value) ? e.currentTarget.value : undefined;
+		const cvr =
+			e.currentTarget.value.length == 8 && Number(e.currentTarget.value)
+				? e.currentTarget.value
+				: undefined;
 
 		if (cvr) {
+			console.log("onblur");
 			await fetchCVR(cvr);
 		}
-	}
+	};
 
 	return (
 		<div className="flex flex-col items-center gap-6 justify-center h-full pt-32">
@@ -82,17 +92,19 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 				<div className="h-">
 					<h2 className="text-2xl font-bold">Create BusinessAccount</h2>
 					{alert.length > 0 && (
-						<div className="w-full bg-red-400 text-white rounded-md p-2 px-3">{alert}</div>
+						<div className="w-full bg-red-400 text-white rounded-md p-2 px-3">
+							{alert}
+						</div>
 					)}
-					<h3 className="">
-						First we'll handle the business registration
-					</h3>
+					<h3 className="">First we'll handle the business registration</h3>
 					<form
 						noValidate
 						className="flex flex-col justify-center items-center w-full gap-5"
+						ref={formRef}
 					>
 						<div className="flex flex-col w-full gap-5">
 							<InputField
+								ref={cvrInputRef}
 								onChange={onChange}
 								onBlur={onBlur}
 								label="CVR"
@@ -172,14 +184,13 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 							</Button>
 							<Button
 								onClick={() => {
-									navigate("/signup/business/account", {state: formData})
+									navigate("/signup/business/account", { state: formData });
 								}}
 							>
 								Next
 							</Button>
 							{/*<Button type="submit">Create</Button>*/}
 						</div>
-
 					</form>
 				</div>
 			</div>
