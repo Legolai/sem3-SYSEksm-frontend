@@ -17,8 +17,8 @@ function Header({ setErrorMsg }: HeaderProps) {
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem
-					// permissionRequired={"BUSINESSACCOUNT"}
-					route={"/viewFoocleSpots"}
+					permissionRequired={"BUSINESSACCOUNT"}
+					route={"/business/viewFoocleSpots"}
 					icon={"fa-solid fa-location-pin"}
 					label={"View FoocleSpots"}
 				/>

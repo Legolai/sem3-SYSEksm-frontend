@@ -42,7 +42,7 @@ const createFoocleSpot = ({ afterSubmit }: SignUpProps) => {
 
 		if (isOk()) {
 			try {
-				const createFoocleSpot = await API.business.createFoocleSpot(formData);
+				const createFoocleSpot = await API.spot.createFoocleSpot(formData);
 				console.log(createFoocleSpot);
 				navigate("/createFoocleSpot");
 			} catch (error: any) {

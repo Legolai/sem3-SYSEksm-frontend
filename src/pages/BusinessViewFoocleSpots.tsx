@@ -4,7 +4,10 @@ import { useValidator } from "@/utils/validationHelper";
 import { FocusEvent ,ChangeEvent, FormEvent, useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "@/api";
-import {useAuth} from "../stores/AuthContext";
+import {useAuth} from "../hooks/AuthContext";
+import CustomMarker from "@/components/CustomMarker";
+import CustomMap from "@/components/CustomMap";
+import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable";
 
 interface SignUpProps {
 	afterSubmit?: () => void;
@@ -23,26 +26,19 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 		// 	msg: "This field is required",
 		// },
 	]);
+	const [foocleSpots, setFoocleSpots] = useState<FoocleSpotAvailable[]>([]);
 
-	useEffect( () => {
-		console.log(2);
-	}, [])
 
-	const fetchFoocleSpots = async () => {
-		console.log(formData)
-		// doValidation();
+	useEffect(() => {
+		const load = async () => {
+			const data = await API.spot.businessGetFoocleSpots(Number.parseInt(formData.businessAccountID));
+			setFoocleSpots(data);
+		};
 
-		if (isOk()) {
-			try {
-				const getFoocleSpots = await API.business.businessGetFoocleSpots(2);
-				console.log(getFoocleSpots)
-				navigate("/viewFoocleSpots")
-			} catch (error: any) {
-				const errMsgFull = await error.fullError;
-				console.log(errMsgFull.message);
-			}
-		}
-	};
+		load();
+
+		return () => {};
+	}, []);
 
 
 	return (
@@ -58,12 +54,68 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 						click any of them to see SpotMenus and Requests for that FoocleSpot!
 					</h3>
 
-					<div className="flex flex-col border-rose-500 p-10 shadow-lg gap-5 justify-center bg-white rounded-lg">
-						<h3 className="">
-							Supposed to be container with google maps picture
-						</h3>
-					</div>
+					{
+						foocleSpots.map(spot => {
+							const geo: [number, number] = [
+								Number.parseFloat(spot.location.latitude),
+								Number.parseFloat(spot.location.longitude),
+							];
+							return (
+								<div className="flex flex-row p-2 shadow-lg gap-0 justify-center bg-white rounded-lg">
+									<div className="flex w-3/4 p-2 shadow-lg gap-2 bg-white rounded-lg">
+										<CustomMap
+											newStartCenter={[Number.parseFloat(spot.location.latitude), Number.parseFloat(spot.location.longitude)]}
+									   		newStartZoom={16}
+										>
+											{
+												<CustomMarker
+													foocleSpot={spot}
+													key={spot.id}
+													width={30}
+													anchor={geo}
+													color={"#00b295"}
+												/>
+											}
+										</CustomMap>
+									</div>
+									<div className="flex w-full flex-col border-rose-500 p-10 shadow-lg gap-5 bg-white rounded-lg">
+										<h3 className="">
+											{spot.location.address} {spot.location.zipCode} {spot.location.city}
+										</h3>
+									</div>
+								</div>
+							);
+						})
+					}
 
+					{/*<div className="flex flex-row border-rose-500 p-4 shadow-lg gap-5 justify-center bg-white rounded-lg">*/}
+					{/*	<div className="flex border-rose-500 p-10 shadow-lg gap-5 bg-white rounded-lg">*/}
+					{/*		<CustomMap>*/}
+					{/*			{foocleSpots.map(spot => {*/}
+					{/*				const geo: [number, number] = [*/}
+					{/*					Number.parseFloat(spot.location.latitude),*/}
+					{/*					Number.parseFloat(spot.location.longitude),*/}
+					{/*				];*/}
+					{/*				return (*/}
+					{/*					<CustomMarker*/}
+					{/*						hover={spot == currentSpot ? true : undefined}*/}
+					{/*						onClick={selectSpot}*/}
+					{/*						foocleSpot={spot}*/}
+					{/*						key={spot.id}*/}
+					{/*						width={50}*/}
+					{/*						anchor={geo}*/}
+					{/*						color={"#00b295"}*/}
+					{/*					/>*/}
+					{/*				);*/}
+					{/*			})}*/}
+					{/*		</CustomMap>*/}
+					{/*	</div>*/}
+					{/*	<div className="flex w-full flex-col border-rose-500 p-10 shadow-lg gap-5 bg-white rounded-lg">*/}
+					{/*		<h3 className="">*/}
+					{/*			Supposed to be FoocleSpot info*/}
+					{/*		</h3>*/}
+					{/*	</div>*/}
+					{/*</div>*/}
 
 
 				</div>

@@ -30,7 +30,10 @@ function App() {
 				<Route path="/scout" element={<GuardedRoute permissionRequired={"FOOCLESCOUT"} />}>
 					<Route path="fooclespots" element={<ViewFoocleSpotPage />} />
 				</Route>
-				<Route path="/viewFoocleSpots" element={<BusinessViewFoocleSpots />} />
+				<Route path="/business" element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}>
+					<Route path="viewFoocleSpots" element={<BusinessViewFoocleSpots />} />
+				</Route>
+
 				<Route path="/createFoocleSpot" element={<CreateFoocleSpot />} />
 				<Route
 					path="/persons"
