@@ -6,7 +6,7 @@ module.exports = {
 			fontFamily: {
 				header: ["Mulish", "sans-serif"],
 				"sub-header": ["Ropa Sans", "sans-serif"],
-				body: ["Pavanam", "sans-serif"],
+				sans: ["Pavanam", "sans-serif"],
 			},
 			colors: {
 				warning: "#F6CA23",
