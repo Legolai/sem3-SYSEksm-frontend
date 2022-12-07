@@ -13,6 +13,7 @@ import User from "./pages/User";
 import { useAuth } from "./hooks/AuthContext";
 import ViewFoocleSpotPage from "./pages/ViewFoocleSpotPage";
 import BusinessViewFoocleSpots from "@/pages/BusinessViewFoocleSpots";
+import BusinessViewSpotMenusForFoocleSpot from "@/pages/BusinessViewSpotMenusForFoocleSpot";
 
 function App() {
 	const { autoLogin, state: authState } = useAuth();
@@ -32,6 +33,7 @@ function App() {
 				</Route>
 				<Route path="/business" element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}>
 					<Route path="viewFoocleSpots" element={<BusinessViewFoocleSpots />} />
+					<Route path="viewSpotMenusForFoocleSpotBA" element={<BusinessViewSpotMenusForFoocleSpot />} />
 				</Route>
 
 				<Route path="/createFoocleSpot" element={<CreateFoocleSpot />} />

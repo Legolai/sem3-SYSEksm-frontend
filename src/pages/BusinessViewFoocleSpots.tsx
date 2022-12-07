@@ -1,23 +1,20 @@
 
-import { Button, InputField } from "@/components";
 import { useValidator } from "@/utils/validationHelper";
-import { FocusEvent ,ChangeEvent, FormEvent, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "@/api";
 import {useAuth} from "../hooks/AuthContext";
 import CustomMarker from "@/components/CustomMarker";
 import CustomMap from "@/components/CustomMap";
 import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable";
+import {Button} from "@/components";
 
-interface SignUpProps {
-	afterSubmit?: () => void;
-}
 
-const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
+const viewFoocleSpots = () => {
 	const { state } = useAuth();
 	const init = { businessAccountID: state.ID, address: "", city: "", zipCode: "", country: "" };
-	const [formData, setFormData] = useState(init);
 	const navigate = useNavigate();
+	const [formData, setFormData] = useState(init);
 	const [alert, setAlert] = useState("");
 	const { isOk, getErrorMsg } = useValidator([
 		// {
@@ -81,47 +78,23 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 									<div className="flex w-full flex-col border-rose-500 p-10 shadow-lg gap-5 bg-white rounded-lg">
 										<h3 className="">
 											{spot.location.address} {spot.location.zipCode} {spot.location.city}
+											<Button
+												onClick={() => {
+													navigate("/business/viewSpotMenusForFoocleSpotBA", { state: spot });
+												}}
+											>
+												Open FoocleSpot
+											</Button>
 										</h3>
 									</div>
 								</div>
 							);
 						})
 					}
-
-					{/*<div className="flex flex-row border-rose-500 p-4 shadow-lg gap-5 justify-center bg-white rounded-lg">*/}
-					{/*	<div className="flex border-rose-500 p-10 shadow-lg gap-5 bg-white rounded-lg">*/}
-					{/*		<CustomMap>*/}
-					{/*			{foocleSpots.map(spot => {*/}
-					{/*				const geo: [number, number] = [*/}
-					{/*					Number.parseFloat(spot.location.latitude),*/}
-					{/*					Number.parseFloat(spot.location.longitude),*/}
-					{/*				];*/}
-					{/*				return (*/}
-					{/*					<CustomMarker*/}
-					{/*						hover={spot == currentSpot ? true : undefined}*/}
-					{/*						onClick={selectSpot}*/}
-					{/*						foocleSpot={spot}*/}
-					{/*						key={spot.id}*/}
-					{/*						width={50}*/}
-					{/*						anchor={geo}*/}
-					{/*						color={"#00b295"}*/}
-					{/*					/>*/}
-					{/*				);*/}
-					{/*			})}*/}
-					{/*		</CustomMap>*/}
-					{/*	</div>*/}
-					{/*	<div className="flex w-full flex-col border-rose-500 p-10 shadow-lg gap-5 bg-white rounded-lg">*/}
-					{/*		<h3 className="">*/}
-					{/*			Supposed to be FoocleSpot info*/}
-					{/*		</h3>*/}
-					{/*	</div>*/}
-					{/*</div>*/}
-
-
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default SignUpBusiness;
+export default viewFoocleSpots;

@@ -3,6 +3,7 @@ import NewScoutAccount from "@/types/entities/newScoutAccount";;
 import { BASE_API_URL } from "../../settings";
 import { handleHttpErrors, makeOptions, setToken } from "./util.api";
 import newFoocleSpot from "@/types/entities/newFoocleSpot";
+import NewSpotMenu from "@/types/entities/newSpotMenu";
 
 
 function getFoocleSpotAPI() {
@@ -14,8 +15,6 @@ function getFoocleSpotAPI() {
       const options = makeOptions("GET", true);
       const res = await fetch(base_endpoint, options);
       const data = await handleHttpErrors(res);
-      console.log("data:")
-      console.log(data)
       return data as FoocleSpotAvailable[];
     } catch (error: any) {
       return Promise.reject({ ...error });
@@ -31,12 +30,23 @@ function getFoocleSpotAPI() {
 
   const businessGetFoocleSpots = async (businessAccountID: number) => {
     try {
-      const options = makeOptions("POST", true, {businessAccountID});
-      const res = await fetch(`${base_endpoint}/getFoocleSpot`, options);
+      const options = makeOptions("GET", true);
+      const res = await fetch(`${base_endpoint}/${businessAccountID}/getFoocleSpot`, options);
       const data = await handleHttpErrors(res);
-      console.log("data:")
-      console.log(data)
       return data as FoocleSpotAvailable[];
+    } catch (error: any) {
+      return Promise.reject({ ...error });
+    }
+  }
+
+  const businessGetSpotMenusForSpot = async (id: number) => {
+    try {
+      const options = makeOptions("GET", true);
+      const res = await fetch(`${base_endpoint}/${id}/menu`, options);
+      const data = await handleHttpErrors(res);
+      console.log("Data from endpoint")
+      console.log(data)
+      return data as NewSpotMenu[];
     } catch (error: any) {
       return Promise.reject({ ...error });
     }
@@ -46,7 +56,8 @@ function getFoocleSpotAPI() {
   return {
     fetchAvailableSpots,
     createFoocleSpot,
-    businessGetFoocleSpots
+    businessGetFoocleSpots,
+    businessGetSpotMenusForSpot
   };
 }
 

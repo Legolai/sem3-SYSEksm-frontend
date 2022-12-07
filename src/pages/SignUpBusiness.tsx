@@ -189,7 +189,6 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 							>
 								Next
 							</Button>
-							{/*<Button type="submit">Create</Button>*/}
 						</div>
 					</form>
 				</div>
