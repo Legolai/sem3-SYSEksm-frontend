@@ -42,15 +42,13 @@ const SignUpBusinessAccount = ({ afterSubmit }: SignUpProps) => {
 	}, [businessFromLocation]);
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		console.log(formData);
 		e.preventDefault();
 		// doValidation();
 
 		if (isOk()) {
 			try {
-				const createBusiness = await API.business.createBusinessAdminAccount(formData);
-				console.log(createBusiness);
-				navigate("/signin");
+				const response = await API.business.createBusinessAdminAccount(formData);
+				response.status == 200 && navigate("/signin");
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;
 				console.log(errMsgFull.message);

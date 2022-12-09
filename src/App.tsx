@@ -12,6 +12,7 @@ import CreateFoocleSpot from "@/pages/CreateFoocleSpot";
 import User from "./pages/User";
 import { useAuth } from "./hooks/AuthContext";
 import ViewFoocleSpotPage from "./pages/ViewFoocleSpotPage";
+import CreateSpotMenu from "./pages/CreateSpotMenu";
 function App() {
 	const { autoLogin, state: authState } = useAuth();
 	const navigate = useNavigate();
@@ -40,6 +41,7 @@ function App() {
 				<Route path="/signup/scout" element={<SignUpScout />} />
 				<Route path="/signup/business" element={<SignUpBusiness />} />
 				<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
+				<Route path="/business/spotmenu/" element={<CreateSpotMenu />} />
 
 				<Route path="*" element={<h1>404 Page Not Found !!!!</h1>} />
 			</Routes>

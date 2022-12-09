@@ -3,6 +3,7 @@ import { BASE_API_URL } from "../../settings";
 import { getToken, handleHttpErrors, makeOptions, setToken } from "./util.api";
 import newBusinessAccount from "@/types/entities/newBusinessAccount";
 import newFoocleSpot from "@/types/entities/newFoocleSpot";
+import SpotMenu from "../types/entities/spotMenu";
 
 
 function getBusinessAPI() {
@@ -32,14 +33,20 @@ function getBusinessAPI() {
     const data = await handleHttpErrors(res);
     return data;
   }
-
+  const createSpotMenu = async ({...props}: SpotMenu) => {
+    const options = makeOptions("POST", true, {...props});
+    const res = await fetch(`${BASE_API_URL}/business/spotMenu`, options);
+    const data = await handleHttpErrors(res);
+    return data;
+  }
 
 
 
   return {
     login,
     createBusinessAdminAccount,
-    createFoocleSpot
+    createFoocleSpot,
+    createSpotMenu
   };
 }
 
