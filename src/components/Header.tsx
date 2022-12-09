@@ -34,7 +34,7 @@ function Header({ setErrorMsg }: HeaderProps) {
 					label={"Persons"}
 				/>
 				<NavItem
-					// permissionRequired={"BUSINESSACCOUNT"}
+					permissionRequired={"BUSINESSACCOUNT"}
 					route={"/business/spotmenu/"}
 					icon={"cutlery"}
 					label={"Add Spotmenu"}
