@@ -14,6 +14,7 @@ import { useAuth } from "./hooks/AuthContext";
 import ViewFoocleSpotPage from "./pages/ViewFoocleSpotPage";
 import BusinessViewFoocleSpots from "@/pages/BusinessViewFoocleSpots";
 import BusinessViewSpotMenusForFoocleSpot from "@/pages/BusinessViewSpotMenusForFoocleSpot";
+import CreateSpotMenu from "./pages/CreateSpotMenu";
 
 function App() {
 	const { autoLogin, state: authState } = useAuth();
@@ -48,6 +49,7 @@ function App() {
 				<Route path="/signup/scout" element={<SignUpScout />} />
 				<Route path="/signup/business" element={<SignUpBusiness />} />
 				<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
+				<Route path="/business/spotmenu/" element={<CreateSpotMenu />} />
 
 				<Route path="*" element={<h1>404 Page Not Found !!!!</h1>} />
 			</Routes>

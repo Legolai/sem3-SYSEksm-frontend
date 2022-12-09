@@ -48,24 +48,19 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 	useEffect(() => {
 		if (businessFromLocation.state && businessFromLocation.state.cvr.length > 0) {
 			const cvr = businessFromLocation.state.cvr;
-			console.log();
 			if (cvrInputRef.current) {
 				cvrInputRef.current.focus();
 				cvrInputRef.current.value = cvr;
 				cvrInputRef.current.blur();
 			}
-		} else {
-			console.log("onload", formData);
 		}
 	}, [businessFromLocation]);
 
 	async function fetchCVR(cvr: string) {
 		const business = await facade.fetchBizz(cvr);
 		let form = formRef.current?.getElementsByTagName("input")!;
-		console.log(form);
 		for (const key in business) {
 			let input = form.namedItem(key) as HTMLInputElement;
-			console.log(input);
 			if (input && key !== "cvr") {
 				input.value = business[key];
 				input.disabled = true;
@@ -81,7 +76,6 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 				: undefined;
 
 		if (cvr) {
-			console.log("onblur");
 			await fetchCVR(cvr);
 		}
 	};
