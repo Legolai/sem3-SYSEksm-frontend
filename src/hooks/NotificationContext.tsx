@@ -50,9 +50,9 @@ function useNotification() {
 		throw new Error("useNotification must be used within a NotificationProvider");
 	}
 
-	const { state: authState } = useAuth();
+	const { state: authState, revalidate } = useAuth();
 
-	const poolingRate = 10_000;
+	const pollingRate = 10_000;
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -71,11 +71,11 @@ function useNotification() {
 			}
 		};
 
-		const poolingTimer = setInterval(() => {
-			if (authState.loggedIn) {
+		const poolingTimer = setInterval(async () => {
+			if (await revalidate()) {
 				fetchNotifications();
 			}
-		}, poolingRate);
+		}, pollingRate);
 
 		if (authState.loggedIn) {
 			fetchNotifications();
