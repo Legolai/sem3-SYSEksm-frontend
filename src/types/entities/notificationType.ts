@@ -1,7 +1,8 @@
 interface NotificationType {
   id: number;
   message: string;
-  scoutrequestsId: number;
+  instructions: string;
+  status: "SEEN" | "NEW";
 }
 
 export default NotificationType;
