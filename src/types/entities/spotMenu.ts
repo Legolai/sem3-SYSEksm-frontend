@@ -1,11 +1,13 @@
+
 interface SpotMenu {
-  id: number;
+  id?: number;
   description: string;
-  pictures: string;
+  // pictures?: File;
+  pictures?: string;
   foodPreferences: string;
   pickupTimeFrom: string;
   pickupTimeTo: string;
-  foocleSpotID: number;
+  foocleSpotID: number | undefined;
 }
 
 export default SpotMenu;
