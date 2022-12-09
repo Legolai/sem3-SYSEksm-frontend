@@ -5,7 +5,7 @@ interface useToggleProps {
   onClose?: () => void;
 }
 
-function useToggle({ onOpen, onClose }: useToggleProps): [boolean, () => void] {
+function useToggle({ onOpen, onClose }: useToggleProps): [boolean, () => void, () => void] {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggler = () => {
@@ -19,8 +19,12 @@ function useToggle({ onOpen, onClose }: useToggleProps): [boolean, () => void] {
     }
   };
 
+  const close = () => {
+    setIsOpen(false);
+    if (onClose) onClose();
+  };
 
-  return [isOpen, toggler];
+  return [isOpen, toggler, close];
 }
 
 export default useToggle;
