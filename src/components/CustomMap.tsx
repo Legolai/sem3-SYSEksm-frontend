@@ -1,15 +1,23 @@
 import { Map } from "pigeon-maps";
 import { maptiler } from "pigeon-maps/providers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface CustomMapProps {
 	children?: JSX.Element[];
 }
 
 function CustomMap({ children }: CustomMapProps) {
-	const [center, setCenter] = useState<[number, number]>([55.6698434, 12.5628476]);
+	const [center, setCenter] = useState<[number, number]>([0, 0]);
 	const [zoom, setZoom] = useState(11);
 	// const maptilerProvider = maptiler("Your_api_key", "streets");
+
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(
+			p => setCenter([p.coords.latitude, p.coords.longitude]),
+			e => {}
+		);
+	}, []);
+
 	return (
 		<Map
 			// provider={maptilerProvider}

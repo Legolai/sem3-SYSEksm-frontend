@@ -55,10 +55,10 @@ function ViewFoocleSpotPage() {
 					];
 					return (
 						<CustomMarker
+							key={spot.id}
 							hover={spot == currentSpot ? true : undefined}
 							onClick={selectSpot}
 							foocleSpot={spot}
-							key={spot.id}
 							width={50}
 							anchor={geo}
 							color={"#00b295"}
@@ -122,7 +122,10 @@ function ViewFoocleSpotPage() {
 										const dateTo = new Date(m.pickupTimeTo);
 
 										return (
-											<div className="max-h-20 flex rounded-md shadow-md items-center m-1">
+											<div
+												key={m.id}
+												className="max-h-20 flex rounded-md shadow-md items-center m-1"
+											>
 												<img
 													src={m.pictures}
 													className="max-h-20 rounded-l-md"
