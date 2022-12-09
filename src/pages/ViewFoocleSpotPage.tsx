@@ -12,13 +12,13 @@ import {
 	faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SpotMenu from "@/types/entities/spotMenu";
 import { Button } from "@/components";
+import newSpotMenu from "@/types/entities/newSpotMenu";
 
 function ViewFoocleSpotPage() {
 	const [foocleSpots, setFoocleSpots] = useState<FoocleSpotAvailable[]>([]);
 	const [currentSpot, setCurrentSpot] = useState<
-		(FoocleSpotAvailable & { menus?: SpotMenu[] }) | undefined
+		(FoocleSpotAvailable & { menus?: newSpotMenu[] }) | undefined
 	>();
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ function ViewFoocleSpotPage() {
 	const selectSpot = async ({
 		payload,
 	}: {
-		payload?: FoocleSpotAvailable & { menus?: SpotMenu[] };
+		payload?: FoocleSpotAvailable & { menus?: newSpotMenu[] };
 	}) => {
 		const newSpot = payload;
 		if (newSpot && newSpot.id) {

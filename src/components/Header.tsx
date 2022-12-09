@@ -4,6 +4,7 @@ import NavItem from "./NavItem";
 import { useAuth } from "../hooks/AuthContext.js";
 import Logo from "./Logo";
 
+
 interface HeaderProps {
 	setErrorMsg?: () => void;
 }

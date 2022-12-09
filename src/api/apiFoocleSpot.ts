@@ -1,10 +1,9 @@
 import { BASE_API_URL } from "../../settings";
 import { handleHttpErrors, makeOptions, setToken } from "./util.api";
 import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable";
-import NewScoutAccount from "@/types/entities/newScoutAccount";
-import SpotMenu from "@/types/entities/spotMenu";;
 import newFoocleSpot from "@/types/entities/newFoocleSpot";
 import NewSpotMenu from "@/types/entities/newSpotMenu";
+import newSpotMenu from "@/types/entities/newSpotMenu";
 
 
 function getFoocleSpotAPI() {
@@ -17,6 +16,18 @@ function getFoocleSpotAPI() {
       const res = await fetch(base_endpoint, options);
       const data = await handleHttpErrors(res);
       return data as FoocleSpotAvailable[];
+    } catch (error: any) {
+      return Promise.reject({ ...error });
+    }
+  };
+  const fetchMenusForAvailableSpot = async (id: number) => {
+    try {
+      const options = makeOptions("GET", true);
+      const res = await fetch(`${base_endpoint}/${id}/menu`, options);
+      const data = await handleHttpErrors(res);
+      console.log("Data from endpoint")
+      console.log(data)
+      return data as newSpotMenu[];
     } catch (error: any) {
       return Promise.reject({ ...error });
     }
@@ -40,37 +51,13 @@ function getFoocleSpotAPI() {
     }
   }
 
-  const businessGetSpotMenusForSpot = async (id: number) => {
-    try {
-      const options = makeOptions("GET", true);
-      const res = await fetch(`${base_endpoint}/${id}/menu`, options);
-      const data = await handleHttpErrors(res);
-      console.log("Data from endpoint")
-      console.log(data)
-      return data as NewSpotMenu[];
-    } catch (error: any) {
-      return Promise.reject({ ...error });
-    }
-  }
-
-  const fetchMenusForAvailableSpot = async (id: number) => {
-    try {
-      const options = makeOptions("GET", true);
-      const res = await fetch(`${base_endpoint}/${id}/menu`, options);
-      const data = await handleHttpErrors(res);
-      return data as SpotMenu[];
-    } catch (error: any) {
-      return Promise.reject({ ...error });
-    }
-  };
 
 
   return {
     fetchAvailableSpots,
     fetchMenusForAvailableSpot,
     createFoocleSpot,
-    businessGetFoocleSpots,
-    businessGetSpotMenusForSpot
+    businessGetFoocleSpots
   };
 }
 
