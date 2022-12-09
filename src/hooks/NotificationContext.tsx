@@ -52,7 +52,7 @@ function useNotification() {
 
 	const { state: authState, revalidate } = useAuth();
 
-	const pollingRate = 10_000;
+	const pollingRate = 60_000;
 
 	useEffect(() => {
 		const controller = new AbortController();

@@ -1,17 +1,28 @@
 
 import { useValidator } from "@/utils/validationHelper";
-import { useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import API from "@/api";
-import {useAuth} from "../hooks/AuthContext";
-import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable";
 import {useLocation, useNavigate} from "react-router-dom";
 import newSpotMenu, {initialNewSpotMenu} from "@/types/entities/newSpotMenu";
-import CustomMap from "@/components/CustomMap";
-import CustomMarker from "@/components/CustomMarker";
 import {Button} from "@/components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock, faLocationDot, faCalendar} from "@fortawesome/free-solid-svg-icons";
+import useToggle from "@/hooks/useToggle";
+import Modal from "@/components/Modal";
+import CreateSpotMenu from "@/pages/CreateSpotMenu";
 
+function NewlineText(textIn:string) {
+	const text = textIn;
+	const newText = text.split('\\n').map(str => <p>{str}</p>);
+	return newText;
+}
+function checkEmptyImg(imgUrl:string) {
+	if (imgUrl != "" && imgUrl != undefined) {
+		return imgUrl;
+	} else {
+		return "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+	}
+}
 
 const viewSpotMenus = () => {
 	const foocleSpotInfo = useLocation();
@@ -25,18 +36,21 @@ const viewSpotMenus = () => {
 		// },
 	]);
 	const [spotMenus, setSpotMenus] = useState<newSpotMenu[]>([]);
+	const [show, toggle] = useToggle({});
 
-
+	const load = async () => {
+		const data = await API.spot.fetchMenusForAvailableSpot(Number.parseInt(foocleSpotInfo.state.id));
+		setSpotMenus(data);
+	};
 	useEffect(() => {
-		console.log(foocleSpotInfo);
-		const load = async () => {
-			const data = await API.spot.fetchMenusForAvailableSpot(Number.parseInt(foocleSpotInfo.state.id));
-			setSpotMenus(data);
-		};
-
+		// console.log(foocleSpotInfo);
 		load();
 	}, [foocleSpotInfo]);
 
+	const afterSubmit = () => {
+		toggle();
+		load();
+	}
 
 	return (
 		<div className="flex flex-col gap-6 h-full p-8">
@@ -69,6 +83,12 @@ const viewSpotMenus = () => {
 					</div>
 					<br/>
 
+					<div className={`w-1/6`}>
+						<Button onClick={toggle}>Create a SpotMenu</Button>
+						<Modal isOpen={show} toggle={toggle}>
+							<CreateSpotMenu id={foocleSpotInfo.state.id} afterSubmit={afterSubmit}/>
+						</Modal>
+					</div>
 
 					<h3 className="font-sub-header mb-2 text-2xl">
 						List of all SpotMenus for this FoocleSpot:<br/>
@@ -77,14 +97,14 @@ const viewSpotMenus = () => {
 					<div className={`flex flex-col p-10 gap-4 grid grid-cols-3 grid-rows-3 justify-center bg-white rounded-lg`}>
 						{
 							spotMenus.map(menu => {
-								console.log(menu);
+								// console.log(menu);
 								const dateFrom = new Date(menu.pickupTimeFrom);
 								const dateTo = new Date(menu.pickupTimeTo);
 								return (
 									<div className="flex flex-col rounded-md shadow-md items-center m-1">
 										<div className="flex gap-4">
 											<img
-												src={menu.pictures}
+												src={checkEmptyImg(menu.pictures)}
 												className="w-1/2 rounded-l-md"
 											/>
 											<div className="flex flex-col self-center gap-4">
@@ -105,7 +125,7 @@ const viewSpotMenus = () => {
 												<h3 className="font-sub-header mb-2 text-xl">Description:</h3>
 											</div>
 											<div className="flex gap-4 items-center">
-												<h3 className="font-light mb-2 text-lg">{menu.description}</h3>
+												<h3 className="font-light mb-2 text-lg">{NewlineText(menu.description)}</h3>
 											</div>
 										</div>
 									</div>
