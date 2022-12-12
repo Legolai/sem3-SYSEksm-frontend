@@ -43,7 +43,6 @@ const viewSpotMenus = () => {
 		setSpotMenus(data);
 	};
 	useEffect(() => {
-		// console.log(foocleSpotInfo);
 		load();
 	}, [foocleSpotInfo]);
 
@@ -97,7 +96,6 @@ const viewSpotMenus = () => {
 					<div className={`flex flex-col p-10 gap-4 grid grid-cols-3 grid-rows-3 justify-center bg-white rounded-lg`}>
 						{
 							spotMenus.map(menu => {
-								// console.log(menu);
 								const dateFrom = new Date(menu.pickupTimeFrom);
 								const dateTo = new Date(menu.pickupTimeTo);
 								return (

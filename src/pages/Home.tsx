@@ -21,7 +21,6 @@ function Home() {
 
 	const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setFormData(e.target.value );
-		console.log(JSON.stringify(formData))
 	};
 
 	return (
