@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import LoggedIn from "./LoggedIn";
 import NavItem from "./NavItem";
 import { useAuth } from "../hooks/AuthContext.js";
@@ -11,6 +11,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import useOutsideTrigger from "@/hooks/useOutsideTrigger";
 import { useRef } from "react";
 import NotificationNavItem from "./NotificationNavItem";
+
 
 interface HeaderProps {
 	setErrorMsg?: () => void;
@@ -25,6 +26,18 @@ function Header({ setErrorMsg }: HeaderProps) {
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem
+					permissionRequired={"BUSINESSACCOUNT"}
+					route={"/business/viewFoocleSpots"}
+					icon={"fa-solid fa-location-pin"}
+					label={"View FoocleSpots"}
+				/>
+				<NavItem
+					permissionRequired={"BUSINESSACCOUNT"}
+					route={"/business/viewRequests"}
+					icon={"fa-solid fa-location-pin"}
+					label={"View Requests"}
+				/>
+				<NavItem
 					permissionRequired={"BUSINESSADMIN"}
 					route={"/createFoocleSpot"}
 					icon={"map-location-dot"}
@@ -35,12 +48,6 @@ function Header({ setErrorMsg }: HeaderProps) {
 					route={"/persons"}
 					icon={"users"}
 					label={"Persons"}
-				/>
-				<NavItem
-					permissionRequired={"BUSINESSACCOUNT"}
-					route={"/business/spotmenu/"}
-					icon={"cutlery"}
-					label={"Add Spotmenu"}
 				/>
 				<NavItem
 					permissionRequired={"FOOCLESCOUT"}

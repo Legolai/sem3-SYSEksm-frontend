@@ -1,12 +1,16 @@
 import { Map } from "pigeon-maps";
 import { maptiler } from "pigeon-maps/providers";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 interface CustomMapProps {
-	children?: JSX.Element[];
+	children?: JSX.Element[] | JSX.Element;
+	newStartCenter?: [number, number];
+	newStartCenterX?: number;
+	newStartCenterY?: number;
+	newStartZoom?: number;
 }
 
-function CustomMap({ children }: CustomMapProps) {
+function CustomMap({ children, newStartCenter, newStartZoom }: CustomMapProps) {
 	const [center, setCenter] = useState<[number, number]>([0, 0]);
 	const [zoom, setZoom] = useState(11);
 	// const maptilerProvider = maptiler("Your_api_key", "streets");
@@ -16,6 +20,12 @@ function CustomMap({ children }: CustomMapProps) {
 			p => setCenter([p.coords.latitude, p.coords.longitude]),
 			e => {}
 		);
+		if (newStartCenter != undefined) {
+			setCenter(newStartCenter);
+		}
+		if (newStartZoom != undefined) {
+			setZoom(newStartZoom);
+		}
 	}, []);
 
 	return (

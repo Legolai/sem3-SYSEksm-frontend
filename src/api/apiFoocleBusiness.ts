@@ -3,7 +3,7 @@ import { BASE_API_URL } from "../../settings";
 import { getToken, handleHttpErrors, makeOptions, setToken } from "./util.api";
 import newBusinessAccount from "@/types/entities/newBusinessAccount";
 import newFoocleSpot from "@/types/entities/newFoocleSpot";
-import SpotMenu from "../types/entities/spotMenu";
+import newScoutRequest from "@/types/entities/newScoutRequest";
 
 
 function getBusinessAPI() {
@@ -33,20 +33,35 @@ function getBusinessAPI() {
     const data = await handleHttpErrors(res);
     return data;
   }
-  const createSpotMenu = async ({...props}: SpotMenu) => {
-    const options = makeOptions("POST", true, {...props});
-    const res = await fetch(`${BASE_API_URL}/business/spotMenu`, options);
-    const data = await handleHttpErrors(res);
-    return data;
+
+  const getScoutRequests = async (id: number) => {
+    try {
+      const options = makeOptions("GET", true);
+      const res = await fetch(`${BASE_API_URL}/business/${id}/requests`, options);
+      const data = await handleHttpErrors(res);
+      return data as newScoutRequest[];
+    } catch (error: any) {
+      return Promise.reject({ ...error });
+    }
   }
 
+  const updateScoutRequestStatus = async (id: number, status: string, scoutID: number) => {
+    try {
+      const options = makeOptions("POST", true, {id, status, scoutID});
+      const res = await fetch(`${BASE_API_URL}/business/request`, options);
+      await handleHttpErrors(res);
+    } catch (error: any) {
+      return Promise.reject({ ...error });
+    }
+  }
 
 
   return {
     login,
     createBusinessAdminAccount,
     createFoocleSpot,
-    createSpotMenu
+    getScoutRequests,
+    updateScoutRequestStatus
   };
 }
 
