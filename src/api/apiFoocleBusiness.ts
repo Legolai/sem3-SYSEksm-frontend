@@ -47,9 +47,9 @@ function getBusinessAPI() {
     }
   }
 
-  const updateScoutRequestStatus = async (id: number, status: string) => {
+  const updateScoutRequestStatus = async (id: number, status: string, scoutID: number) => {
     try {
-      const options = makeOptions("POST", true, {id, status});
+      const options = makeOptions("POST", true, {id, status, scoutID});
       const res = await fetch(`${BASE_API_URL}/business/request`, options);
       await handleHttpErrors(res);
     } catch (error: any) {

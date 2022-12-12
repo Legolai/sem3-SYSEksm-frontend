@@ -35,12 +35,12 @@ const viewRequests = () => {
 	const Accept = async (request:newScoutRequest) => {
 		request.status = "ACCEPTED";
 		requests.map((item) => { return item.id == request.id ? request : item})
-		await API.business.updateScoutRequestStatus(request.id, "ACCEPTED");
+		await API.business.updateScoutRequestStatus(request.id, "ACCEPTED", request.fooclescoutsID);
 	};
 	const Reject = async (request:newScoutRequest) => {
 		request.status = "DENIED";
 		requests.map((item) => { return item.id == request.id ? request : item})
-		await API.business.updateScoutRequestStatus(request.id, "DENIED");
+		await API.business.updateScoutRequestStatus(request.id, "DENIED", request.fooclescoutsID);
 	};
 
 	return (
