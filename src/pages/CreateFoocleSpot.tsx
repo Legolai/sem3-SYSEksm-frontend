@@ -36,14 +36,12 @@ const createFoocleSpot = ({ afterSubmit }: SignUpProps) => {
 	};
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		console.log(formData);
 		e.preventDefault();
 		// doValidation();
 
 		if (isOk()) {
 			try {
 				const createFoocleSpot = await API.spot.createFoocleSpot(formData);
-				console.log(createFoocleSpot);
 				navigate("/createFoocleSpot");
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;

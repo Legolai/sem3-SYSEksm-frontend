@@ -44,7 +44,6 @@ const CreateSpotMenu = ({ afterSubmit, id }: CreateSpotMenu) => {
 	};
 
 	const onSelect = async (e: ChangeEvent<HTMLSelectElement>) => {
-		console.log(e.target.value)
 		setFormData((curr: any) => ({ ...curr, [e.target.name]: e.target.value }));
 	};
 
@@ -64,14 +63,11 @@ const CreateSpotMenu = ({ afterSubmit, id }: CreateSpotMenu) => {
 		if(formData.pictures == undefined) {
 			setFormData((curr: any) => ({ ...curr, pictures: "" }));
 		}
-		console.log(formData);
 		e.preventDefault();
 		// doValidation();
 
 			try {
 				const response = await API.spot.createSpotMenu(formData);
-				console.log(response);
-				console.log(`response status is: ${response.status}`);
 				if (afterSubmit != undefined) {
 					afterSubmit();
 				}

@@ -24,8 +24,6 @@ function getFoocleSpotAPI() {
       const options = makeOptions("GET", true);
       const res = await fetch(`${base_endpoint}/${id}/menu`, options);
       const data = await handleHttpErrors(res);
-      console.log("Data from endpoint")
-      console.log(data)
       return data as newSpotMenu[];
     } catch (error: any) {
       return Promise.reject({ ...error });

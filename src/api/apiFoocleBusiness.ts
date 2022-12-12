@@ -39,8 +39,6 @@ function getBusinessAPI() {
       const options = makeOptions("GET", true);
       const res = await fetch(`${BASE_API_URL}/business/${id}/requests`, options);
       const data = await handleHttpErrors(res);
-      console.log("Data from endpoint")
-      console.log(data)
       return data as newScoutRequest[];
     } catch (error: any) {
       return Promise.reject({ ...error });
