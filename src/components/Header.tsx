@@ -12,7 +12,6 @@ import useOutsideTrigger from "@/hooks/useOutsideTrigger";
 import { useRef } from "react";
 import NotificationNavItem from "./NotificationNavItem";
 
-
 interface HeaderProps {
 	setErrorMsg?: () => void;
 }
@@ -22,7 +21,7 @@ function Header({ setErrorMsg }: HeaderProps) {
 
 	return (
 		<>
-			<nav className="w-full flex shadow-lg p-2  bg-white h-[60px] gap-2">
+			<nav className="w-full flex shadow-lg p-2 bg-white h-[60px] gap-2">
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem
@@ -97,6 +96,7 @@ function Header({ setErrorMsg }: HeaderProps) {
 					)}
 				</div>
 			</nav>
+			<Outlet />
 		</>
 	);
 }
