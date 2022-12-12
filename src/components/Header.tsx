@@ -29,6 +29,12 @@ function Header({ setErrorMsg }: HeaderProps) {
 					label={"View FoocleSpots"}
 				/>
 				<NavItem
+					permissionRequired={"BUSINESSACCOUNT"}
+					route={"/business/viewRequests"}
+					icon={"fa-solid fa-location-pin"}
+					label={"View Requests"}
+				/>
+				<NavItem
 					permissionRequired={"BUSINESSADMIN"}
 					route={"/createFoocleSpot"}
 					icon={"map-location-dot"}
@@ -39,12 +45,6 @@ function Header({ setErrorMsg }: HeaderProps) {
 					route={"/persons"}
 					icon={"users"}
 					label={"Persons"}
-				/>
-				<NavItem
-					permissionRequired={"BUSINESSACCOUNT"}
-					route={"/business/spotmenu/"}
-					icon={"cutlery"}
-					label={"Add Spotmenu"}
 				/>
 				<NavItem
 					permissionRequired={"FOOCLESCOUT"}

@@ -15,6 +15,7 @@ import ViewFoocleSpotPage from "./pages/ViewFoocleSpotPage";
 import BusinessViewFoocleSpots from "@/pages/BusinessViewFoocleSpots";
 import BusinessViewSpotMenusForFoocleSpot from "@/pages/BusinessViewSpotMenusForFoocleSpot";
 import CreateSpotMenu from "./pages/CreateSpotMenu";
+import BusinessViewRequests from "@/pages/BusinessViewRequests";
 
 function App() {
 	const { autoLogin, state: authState } = useAuth();
@@ -35,6 +36,7 @@ function App() {
 				<Route path="/business" element={<GuardedRoute permissionRequired={"BUSINESSACCOUNT"} />}>
 					<Route path="viewFoocleSpots" element={<BusinessViewFoocleSpots />} />
 					<Route path="viewSpotMenusForFoocleSpotBA" element={<BusinessViewSpotMenusForFoocleSpot />} />
+					<Route path="viewRequests" element={<BusinessViewRequests />} />
 				</Route>
 
 				<Route path="/createFoocleSpot" element={<CreateFoocleSpot />} />

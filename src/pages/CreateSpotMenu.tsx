@@ -7,7 +7,7 @@ import { useAuth } from "../hooks/AuthContext";
 import newSpotMenu from "@/types/entities/newSpotMenu";
 
 interface CreateSpotMenu {
-	afterSubmit: () => void;
+	afterSubmit?: () => void;
 	id?: number;
 }
 
@@ -72,7 +72,9 @@ const CreateSpotMenu = ({ afterSubmit, id }: CreateSpotMenu) => {
 				const response = await API.spot.createSpotMenu(formData);
 				console.log(response);
 				console.log(`response status is: ${response.status}`);
-				afterSubmit();
+				if (afterSubmit != undefined) {
+					afterSubmit();
+				}
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;
 				console.log(errMsgFull.message);
