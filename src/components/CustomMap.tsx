@@ -11,21 +11,22 @@ interface CustomMapProps {
 }
 
 function CustomMap({ children, newStartCenter, newStartZoom }: CustomMapProps) {
-	const [center, setCenter] = useState<[number, number]>([55.6698434, 12.5628476]);
+	const [center, setCenter] = useState<[number, number]>([0, 0]);
 	const [zoom, setZoom] = useState(11);
 	// const maptilerProvider = maptiler("Your_api_key", "streets");
 
 	useEffect(() => {
-		return () => {
-			if (newStartCenter != undefined) {
-				setCenter(newStartCenter);
-			}
-			if (newStartZoom != undefined) {
-				setZoom(newStartZoom);
-			}
-		};
+		navigator.geolocation.getCurrentPosition(
+			p => setCenter([p.coords.latitude, p.coords.longitude]),
+			e => {}
+		);
+		if (newStartCenter != undefined) {
+			setCenter(newStartCenter);
+		}
+		if (newStartZoom != undefined) {
+			setZoom(newStartZoom);
+		}
 	}, []);
-
 
 	return (
 		<Map
