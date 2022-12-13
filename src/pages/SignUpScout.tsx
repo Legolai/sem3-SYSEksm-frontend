@@ -45,7 +45,7 @@ const SignUpScout = ({ afterSubmit }: SignUpProps) => {
 
 	return (
 		<div className="flex items-center justify-center h-full">
-			<div className="flex flex-col items-center p-10 shadow-lg gap-5 justify-center bg-white rounded-lg">
+			<div className="flex flex-col items-center p-10 shadow-lg gap-5 justify-center bg-white rounded-lg animated fadeInUp">
 				<h2 className="text-2xl font-bold">Become a FoocleScout</h2>
 				{alert.length > 0 && (
 					<div className="w-full bg-red-400 text-white rounded-md p-2 px-3">{alert}</div>

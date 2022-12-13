@@ -9,7 +9,7 @@ type Action = {
 };
 
 type State = {
-	ID: string;
+	ID?: number;
 	email: string;
 	fname: string;
 	lname: string;
@@ -46,7 +46,7 @@ function authReducer(state: State, action: Action): State {
 
 function AuthProvider({ children }: AuthProviderProps) {
 	const [state, dispatch] = useReducer(authReducer, {
-		ID: "",
+		ID: undefined,
 		email: "",
 		fname: "",
 		lname: "",

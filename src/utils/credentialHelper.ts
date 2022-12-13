@@ -13,7 +13,7 @@ function decodeJwt() {
   return decodedJwtData;
 }
 
-function getID(jwt: { ID: string; }) {
+function getID(jwt: { ID: number; }) {
   return jwt && jwt.ID;
 }
 function getEmail(jwt: { email: string; }) {

@@ -15,11 +15,11 @@ const Button = ({
 }: ButtonProps) => {
 	return (
 		<button
-			className={`${className} flex-grow m-0 w-full px-5 py-2 rounded-lg ${
+			className={`${className} transition-all flex-grow m-0 w-full px-5 py-2 rounded-lg disabled:opacity-75 enabled:active:scale-95 enabled:hover:scale-105 disabled:cursor-not-allowed disabled:bg-gray-400 ${
 				outline
-					? "hover:bg-primary-500 hover:text-white border-2 border-primary-500 text-primary-500"
+					? "	enabled:hover:bg-primary-500 hover:text-white border-2 border-primary-500 text-primary-500"
 					: "bg-primary-500 text-white"
-			} active:scale-95 hover:scale-105 transition-all ${disabled ? "bg-gray-400" : ""}`}
+			}`}
 			type={type}
 			onClick={onClick}
 			disabled={disabled}
