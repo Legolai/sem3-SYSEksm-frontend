@@ -26,7 +26,6 @@ function getScoutAPI() {
   };
 
   const getScoutRequest = async (id: number) => {
-
     try {
       const options = makeOptions("GET", true);
       const res = await fetch(`${BASE_API_URL}/scout/${id}/request`, options);
@@ -35,13 +34,25 @@ function getScoutAPI() {
     } catch (error: any) {
       return Promise.reject({ ...error });
     }
-
   };
+
+  const RequestMenu = async (menuID: number, scoutID: number, businessAccountID:number) => {
+    try {
+      const options = makeOptions("POST", true, {spotmenuID: menuID, fooclescoutID: scoutID, businessAccountID: businessAccountID});
+      const res = await fetch(`${BASE_API_URL}/scout/request`, options);
+      const data = await handleHttpErrors(res);
+      return data as MadeScoutRequest[];
+    } catch (error: any) {
+      return Promise.reject({...error});
+    } 
+  }
+
 
   return {
     createScoutAccount,
     login,
-    getScoutRequest
+    getScoutRequest,
+    RequestMenu
   };
 }
 
