@@ -73,26 +73,6 @@ const viewRequests = () => {
 					]}
 				/>
 
-					{/*{*/}
-					{/*	requests.map(request => {*/}
-					{/*		return (*/}
-					{/*			<div className="flex flex-row rounded-md shadow-md items-center m-1 gap-8">*/}
-					{/*				<div>*/}
-					{/*					{request.id}, {request.message}, {request.status}, {request.spotMenuID}, {request.fooclescoutsID}, {request.createdAt}, {request.updatedAt}*/}
-					{/*				</div>*/}
-					{/*				<div className="flex flex-row gap-2">*/}
-					{/*					<Button onClick={() => {Accept(request)}} >*/}
-					{/*						Accept*/}
-					{/*					</Button>*/}
-					{/*					<Button onClick={() => {Reject(request)}} >*/}
-					{/*						Reject*/}
-					{/*					</Button>*/}
-					{/*				</div>*/}
-					{/*			</div>*/}
-					{/*		);*/}
-					{/*	})*/}
-					{/*}*/}
-
 			</div>
 		</div>
 	);

@@ -61,7 +61,7 @@ const viewFoocleSpots = () => {
 								<div className="flex flex-row p-2 shadow-lg gap-0 justify-center bg-white rounded-lg">
 									<div className="flex w-3/4 p-2 shadow-lg gap-2 bg-white rounded-lg">
 										<CustomMap
-											newStartCenter={[Number.parseFloat(spot.location.latitude), Number.parseFloat(spot.location.longitude)]}
+											newStartCenter={geo}
 									   		newStartZoom={16}
 										>
 											{
