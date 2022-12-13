@@ -82,7 +82,7 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 
 	return (
 		<div className="flex flex-col items-center gap-6 justify-center h-full pt-32">
-			<div className="flex flex-col items-center p-10 shadow-lg gap-5 justify-center bg-white rounded-lg">
+			<div className="flex flex-col items-center p-10 shadow-lg gap-5 justify-center bg-white rounded-lg animated fadeInUp">
 				<div className="h-">
 					<h2 className="text-2xl font-bold">Create BusinessAccount</h2>
 					{alert.length > 0 && (
