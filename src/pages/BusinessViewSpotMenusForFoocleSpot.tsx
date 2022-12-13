@@ -39,7 +39,7 @@ const viewSpotMenus = () => {
 	const [show, toggle] = useToggle({});
 
 	const load = async () => {
-		const data = await API.spot.fetchMenusForAvailableSpot(Number.parseInt(foocleSpotInfo.state.id));
+		const data = await API.spot.fetchRelevantMenusForAvailableSpot(Number.parseInt(foocleSpotInfo.state.id));
 		setSpotMenus(data);
 	};
 	useEffect(() => {

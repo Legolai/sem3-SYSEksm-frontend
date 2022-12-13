@@ -29,10 +29,20 @@ function getFoocleSpotAPI() {
       return Promise.reject({ ...error });
     }
   };
+  const fetchRelevantMenusForAvailableSpot = async (id: number) => {
+    try {
+      const options = makeOptions("GET", true);
+      const res = await fetch(`${base_endpoint}/${id}/relevantMenu`, options);
+      const data = await handleHttpErrors(res);
+      return data as newSpotMenu[];
+    } catch (error: any) {
+      return Promise.reject({ ...error });
+    }
+  };
 
   const createFoocleSpot = async ({...props}: newFoocleSpot) => {
     const options = makeOptions("POST", true, {...props});
-    const res = await fetch(`${base_endpoint}/foocleSpot`, options);
+    const res = await fetch(`${base_endpoint}`, options);
     const data = await handleHttpErrors(res);
     return data;
   }
@@ -59,6 +69,7 @@ function getFoocleSpotAPI() {
   return {
     fetchAvailableSpots,
     fetchMenusForAvailableSpot,
+    fetchRelevantMenusForAvailableSpot,
     createFoocleSpot,
     createSpotMenu,
     businessGetFoocleSpots

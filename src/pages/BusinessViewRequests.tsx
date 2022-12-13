@@ -4,8 +4,12 @@ import { useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "@/api";
 import {useAuth} from "../hooks/AuthContext";
-import newScoutRequest from "@/types/entities/newScoutRequest";
+import newScoutRequest, {newScoutRequestMenu} from "@/types/entities/newScoutRequest";
 import {Button} from "@/components";
+import TheFoocleScoutLogin from "@/components/TheFoocleScoutLogin";
+import TheFoocleBusinessLogin from "@/components/TheFoocleBusinessLogin";
+import Tabs from "@/components/Tabs";
+import BViewRequestDisplay from "@/components/BViewRequestDisplay";
 
 
 const viewRequests = () => {
@@ -18,26 +22,26 @@ const viewRequests = () => {
 		// 	msg: "This field is required",
 		// },
 	]);
-	const [requests, setRequests] = useState<newScoutRequest[]>([]);
+	const [requests, setRequests] = useState<newScoutRequestMenu[]>([]);
+	const [allRequests, setAllRequests] = useState<newScoutRequestMenu[]>([]);
 
-
+	const load = async () => {
+		const data = await API.business.getScoutRequests(Number.parseInt(state.ID), "relevantRequest");
+		setRequests(data);
+		const data2 = await API.business.getScoutRequests(Number.parseInt(state.ID), "request");
+		setAllRequests(data2);
+	};
 	useEffect(() => {
-		const load = async () => {
-			const data = await API.business.getScoutRequests(Number.parseInt(state.ID));
-			setRequests(data);
-		};
-
 		load();
-
 		return () => {};
 	}, []);
 
-	const Accept = async (request:newScoutRequest) => {
+	const Accept = async (request:newScoutRequestMenu) => {
 		request.status = "ACCEPTED";
 		requests.map((item) => { return item.id == request.id ? request : item})
 		await API.business.updateScoutRequestStatus(request.id, "ACCEPTED", request.fooclescoutsID);
 	};
-	const Reject = async (request:newScoutRequest) => {
+	const Reject = async (request:newScoutRequestMenu) => {
 		request.status = "DENIED";
 		requests.map((item) => { return item.id == request.id ? request : item})
 		await API.business.updateScoutRequestStatus(request.id, "DENIED", request.fooclescoutsID);
@@ -54,28 +58,21 @@ const viewRequests = () => {
 					<h3 className="">
 						Here's the list of all pending Requests for your business.
 					</h3>
-
-					{
-						requests.map(request => {
-							return (
-								<div className="flex flex-row rounded-md shadow-md items-center m-1 gap-8">
-									<div>
-										{request.id}, {request.message}, {request.status}, {request.spotmenuID}, {request.fooclescoutsID}, {request.createdAt}, {request.updatedAt}
-									</div>
-									<div className="flex flex-row gap-2">
-										<Button onClick={() => {Accept(request)}} >
-											Accept
-										</Button>
-										<Button onClick={() => {Reject(request)}} >
-											Reject
-										</Button>
-									</div>
-								</div>
-							);
-						})
-					}
-
 				</div>
+
+				<Tabs
+					tabs={[
+						{
+							name: "Current",
+							content: <BViewRequestDisplay requests={requests} buttonsTrue={true} Accept={Accept} Reject={Reject} />,
+						},
+						{
+							name: "All",
+							content: <BViewRequestDisplay requests={allRequests} buttonsTrue={false} Accept={Accept} Reject={Reject} />,
+						},
+					]}
+				/>
+
 			</div>
 		</div>
 	);

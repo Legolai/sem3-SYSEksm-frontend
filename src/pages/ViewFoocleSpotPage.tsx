@@ -17,15 +17,20 @@ import newSpotMenu from "@/types/entities/newSpotMenu";
 
 function ViewFoocleSpotPage() {
 	const [foocleSpots, setFoocleSpots] = useState<FoocleSpotAvailable[]>([]);
-	const [currentSpot, setCurrentSpot] = useState<
-		(FoocleSpotAvailable & { menus?: newSpotMenu[] }) | undefined
-	>();
+	const [currentSpot, setCurrentSpot] = useState<(FoocleSpotAvailable & { menus?: newSpotMenu[] }) | undefined>();
+	const [currentCenter, setCurrentCenter] = useState<[number, number]>([55.65, 12.55]);
+
 
 	useEffect(() => {
 		const load = async () => {
 			const data = await API.spot.fetchAvailableSpots();
 			setFoocleSpots(data);
 		};
+
+		navigator.geolocation.getCurrentPosition(
+			p => setCurrentCenter([p.coords.latitude, p.coords.longitude]),
+			e => {}
+		);
 
 		load();
 
@@ -47,7 +52,7 @@ function ViewFoocleSpotPage() {
 
 	return (
 		<div className="relative w-full h-[92%] ">
-			<CustomMap>
+			<CustomMap newStartCenter={currentCenter}>
 				{foocleSpots.map(spot => {
 					const geo: [number, number] = [
 						Number.parseFloat(spot.location.latitude),
