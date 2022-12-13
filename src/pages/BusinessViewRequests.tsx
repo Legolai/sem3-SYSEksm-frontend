@@ -4,7 +4,7 @@ import { useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "@/api";
 import {useAuth} from "../hooks/AuthContext";
-import newScoutRequest from "@/types/entities/newScoutRequest";
+import newScoutRequest, {newScoutRequestMenu} from "@/types/entities/newScoutRequest";
 import {Button} from "@/components";
 
 
@@ -18,7 +18,7 @@ const viewRequests = () => {
 		// 	msg: "This field is required",
 		// },
 	]);
-	const [requests, setRequests] = useState<newScoutRequest[]>([]);
+	const [requests, setRequests] = useState<newScoutRequestMenu[]>([]);
 
 
 	useEffect(() => {
@@ -32,12 +32,12 @@ const viewRequests = () => {
 		return () => {};
 	}, []);
 
-	const Accept = async (request:newScoutRequest) => {
+	const Accept = async (request:newScoutRequestMenu) => {
 		request.status = "ACCEPTED";
 		requests.map((item) => { return item.id == request.id ? request : item})
 		await API.business.updateScoutRequestStatus(request.id, "ACCEPTED", request.fooclescoutsID);
 	};
-	const Reject = async (request:newScoutRequest) => {
+	const Reject = async (request:newScoutRequestMenu) => {
 		request.status = "DENIED";
 		requests.map((item) => { return item.id == request.id ? request : item})
 		await API.business.updateScoutRequestStatus(request.id, "DENIED", request.fooclescoutsID);
@@ -60,7 +60,7 @@ const viewRequests = () => {
 							return (
 								<div className="flex flex-row rounded-md shadow-md items-center m-1 gap-8">
 									<div>
-										{request.id}, {request.message}, {request.status}, {request.spotmenuID}, {request.fooclescoutsID}, {request.createdAt}, {request.updatedAt}
+										{request.id}, {request.message}, {request.status}, {request.spotMenuID}, {request.fooclescoutsID}, {request.createdAt}, {request.updatedAt}
 									</div>
 									<div className="flex flex-row gap-2">
 										<Button onClick={() => {Accept(request)}} >
