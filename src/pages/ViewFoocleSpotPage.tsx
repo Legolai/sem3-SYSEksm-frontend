@@ -17,9 +17,10 @@ import newSpotMenu from "@/types/entities/newSpotMenu";
 
 function ViewFoocleSpotPage() {
 	const [foocleSpots, setFoocleSpots] = useState<FoocleSpotAvailable[]>([]);
-	const [currentSpot, setCurrentSpot] = useState<(FoocleSpotAvailable & { menus?: newSpotMenu[] }) | undefined>();
+	const [currentSpot, setCurrentSpot] = useState<
+		(FoocleSpotAvailable & { menus?: newSpotMenu[] }) | undefined
+	>();
 	const [currentCenter, setCurrentCenter] = useState<[number, number]>([55.65, 12.55]);
-
 
 	useEffect(() => {
 		const load = async () => {
@@ -52,7 +53,10 @@ function ViewFoocleSpotPage() {
 
 	return (
 		<div className="relative w-full h-[92%] ">
-			<CustomMap newStartCenter={currentCenter}>
+			<CustomMap
+				key={"" + currentCenter[0] + currentCenter[1]}
+				newStartCenter={currentCenter}
+			>
 				{foocleSpots.map(spot => {
 					const geo: [number, number] = [
 						Number.parseFloat(spot.location.latitude),
