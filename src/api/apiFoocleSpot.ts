@@ -32,7 +32,7 @@ function getFoocleSpotAPI() {
 
   const createFoocleSpot = async ({...props}: newFoocleSpot) => {
     const options = makeOptions("POST", true, {...props});
-    const res = await fetch(`${base_endpoint}/foocleSpot`, options);
+    const res = await fetch(`${base_endpoint}`, options);
     const data = await handleHttpErrors(res);
     return data;
   }
