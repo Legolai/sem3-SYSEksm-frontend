@@ -1,8 +1,8 @@
-import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable";
-import NewScoutAccount from "@/types/entities/newScoutAccount"; import SpotMenu from "@/types/entities/spotMenu";
-;
 import { BASE_API_URL } from "../../settings";
 import { handleHttpErrors, makeOptions, setToken } from "./util.api";
+import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable";
+import newFoocleSpot from "@/types/entities/newFoocleSpot";
+import newSpotMenu from "@/types/entities/newSpotMenu";
 
 
 function getFoocleSpotAPI() {
@@ -19,22 +19,60 @@ function getFoocleSpotAPI() {
       return Promise.reject({ ...error });
     }
   };
-
   const fetchMenusForAvailableSpot = async (id: number) => {
     try {
       const options = makeOptions("GET", true);
       const res = await fetch(`${base_endpoint}/${id}/menu`, options);
       const data = await handleHttpErrors(res);
-      return data as SpotMenu[];
+      return data as newSpotMenu[];
+    } catch (error: any) {
+      return Promise.reject({ ...error });
+    }
+  };
+  const fetchRelevantMenusForAvailableSpot = async (id: number) => {
+    try {
+      const options = makeOptions("GET", true);
+      const res = await fetch(`${base_endpoint}/${id}/relevantMenu`, options);
+      const data = await handleHttpErrors(res);
+      return data as newSpotMenu[];
     } catch (error: any) {
       return Promise.reject({ ...error });
     }
   };
 
+  const createFoocleSpot = async ({...props}: newFoocleSpot) => {
+    const options = makeOptions("POST", true, {...props});
+    const res = await fetch(`${base_endpoint}`, options);
+    const data = await handleHttpErrors(res);
+    return data;
+  }
+  const createSpotMenu = async ({...props}: newSpotMenu) => {
+    const options = makeOptions("POST", true, {...props});
+    const res = await fetch(`${base_endpoint}/spotMenu`, options);
+    const data = await handleHttpErrors(res);
+    return data;
+  }
+
+  const businessGetFoocleSpots = async (businessAccountID: number) => {
+    try {
+      const options = makeOptions("GET", true);
+      const res = await fetch(`${base_endpoint}/${businessAccountID}/getFoocleSpot`, options);
+      const data = await handleHttpErrors(res);
+      return data as FoocleSpotAvailable[];
+    } catch (error: any) {
+      return Promise.reject({ ...error });
+    }
+  }
+
+
 
   return {
     fetchAvailableSpots,
-    fetchMenusForAvailableSpot
+    fetchMenusForAvailableSpot,
+    fetchRelevantMenusForAvailableSpot,
+    createFoocleSpot,
+    createSpotMenu,
+    businessGetFoocleSpots
   };
 }
 

@@ -9,7 +9,7 @@ interface SignUpProps {
 	afterSubmit?: () => void;
 }
 
-const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
+const createFoocleSpot = ({ afterSubmit }: SignUpProps) => {
 	const { state } = useAuth();
 	const init = { businessAccountID: state.ID, address: "", city: "", zipCode: "", country: "" };
 	const [formData, setFormData] = useState(init);
@@ -36,14 +36,12 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 	};
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		console.log(formData);
 		e.preventDefault();
 		// doValidation();
 
 		if (isOk()) {
 			try {
-				const createFoocleSpot = await API.business.createFoocleSpot(formData);
-				console.log(createFoocleSpot);
+				const createFoocleSpot = await API.spot.createFoocleSpot(formData);
 				navigate("/createFoocleSpot");
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;
@@ -122,4 +120,4 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 	);
 };
 
-export default SignUpBusiness;
+export default createFoocleSpot;

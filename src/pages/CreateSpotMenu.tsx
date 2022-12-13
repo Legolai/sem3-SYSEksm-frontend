@@ -1,17 +1,17 @@
 import { Button, InputField } from "@/components";
-import {FocusEvent, ChangeEvent, FormEvent, useEffect, useState, useRef} from "react";
-import Select from "react-select/base";
+import {FocusEvent, ChangeEvent, FormEvent, useState} from "react";
 import {useValidator} from "@/utils/validationHelper";
 import { Link, useNavigate } from "react-router-dom";
 import API from "@/api";
 import { useAuth } from "../hooks/AuthContext";
-import {ActionMeta, InputActionMeta} from "react-select";
+import newSpotMenu from "@/types/entities/newSpotMenu";
 
 interface CreateSpotMenu {
 	afterSubmit?: () => void;
+	id?: number;
 }
 
-const CreateSpotMenu = ({ afterSubmit }: CreateSpotMenu) => {
+const CreateSpotMenu = ({ afterSubmit, id }: CreateSpotMenu) => {
 	const { state } = useAuth();
 	// const foodPrefValues: { label:string , value:string}[] = [
 	// 	{label:'', value:''},
@@ -21,7 +21,7 @@ const CreateSpotMenu = ({ afterSubmit }: CreateSpotMenu) => {
 	// 	{label:'POLLOTAR', value:'POLLOTAR'}
 	// ]
 	const dateTimeNow = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":"));
-	const init = {description: "", pictures: undefined, foodPreferences: '', pickupTimeFrom: "", pickupTimeTo: "", foocleSpotID: undefined };
+	const init = {id: undefined, foocleSpotID: id, description: '', pictures: '', foodPreferences: '', pickupTimeFrom: '', pickupTimeTo: ''};
 	const [formData, setFormData] = useState(init);
 	const navigate = useNavigate();
 	const [alert, setAlert] = useState("");
@@ -44,7 +44,6 @@ const CreateSpotMenu = ({ afterSubmit }: CreateSpotMenu) => {
 	};
 
 	const onSelect = async (e: ChangeEvent<HTMLSelectElement>) => {
-		console.log(e.target.value)
 		setFormData((curr: any) => ({ ...curr, [e.target.name]: e.target.value }));
 	};
 
@@ -61,14 +60,17 @@ const CreateSpotMenu = ({ afterSubmit }: CreateSpotMenu) => {
 	};
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		console.log(formData);
+		if(formData.pictures == undefined) {
+			setFormData((curr: any) => ({ ...curr, pictures: "" }));
+		}
 		e.preventDefault();
 		// doValidation();
 
 			try {
-				const response = await API.business.createSpotMenu(formData);
-				console.log(response);
-				response.status == 200 && navigate("/home");
+				const response = await API.spot.createSpotMenu(formData);
+				if (afterSubmit != undefined) {
+					afterSubmit();
+				}
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;
 				console.log(errMsgFull.message);
@@ -143,28 +145,10 @@ const CreateSpotMenu = ({ afterSubmit }: CreateSpotMenu) => {
 								/>
 							</div>
 
-							{/*<Select*/}
-							{/*	className=""*/}
-							{/*	isClearable={true}*/}
-							{/*	name="color"*/}
-							{/*	options={foodPrefValues}*/}
-							{/*/>*/}
-
-							{/* vælg spot fra liste: */}
-							{/*<AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions}/>*/}
-							<select
-								onChange={onSelect}
-								name="foocleSpotID"
-								className="disabled:border-b-primary-100 transition-all duration-300 ease-in-out bg-off-white outline-none border-b-2 border-b-primary-500 focus:border-b-secondary-500 border-b-solid rounded-lg px-4 py-2 w-full">
-								<option value=""> </option>
-								<option value={2}>navn på foodspot</option>
-								<option value={3}>navn på foodspot</option>
-								<option value={4}>navn på foodspot</option>
-							</select>
 							<InputField
 								onChange={onChange}
 								type="text"
-								label="Take some pictures of the food or the menu, upload them and type the web-address"
+								label="Take a picture of the food or the menu, upload them and type the web-address"
 								name="pictures"
 								// accept="image/*"
 								// multiple
@@ -183,7 +167,6 @@ const CreateSpotMenu = ({ afterSubmit }: CreateSpotMenu) => {
 								Reset
 							</Button>
 							<Button type="submit">Create</Button>
-							{/*<Button type="submit">Create</Button>*/}
 						</div>
 					</form>
 				</div>

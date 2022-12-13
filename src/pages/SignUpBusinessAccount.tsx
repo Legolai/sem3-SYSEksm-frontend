@@ -157,7 +157,7 @@ const SignUpBusinessAccount = ({ afterSubmit }: SignUpProps) => {
 							{" "}
 							Back{" "}
 						</Button>
-						<Button type="submit">Create</Button>
+						<Button type="submit" >Create</Button>
 					</div>
 				</form>
 			</div>

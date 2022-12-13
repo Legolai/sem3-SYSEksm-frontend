@@ -12,20 +12,25 @@ import {
 	faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SpotMenu from "@/types/entities/spotMenu";
 import { Button } from "@/components";
+import newSpotMenu from "@/types/entities/newSpotMenu";
 
 function ViewFoocleSpotPage() {
 	const [foocleSpots, setFoocleSpots] = useState<FoocleSpotAvailable[]>([]);
-	const [currentSpot, setCurrentSpot] = useState<
-		(FoocleSpotAvailable & { menus?: SpotMenu[] }) | undefined
-	>();
+	const [currentSpot, setCurrentSpot] = useState<(FoocleSpotAvailable & { menus?: newSpotMenu[] }) | undefined>();
+	const [currentCenter, setCurrentCenter] = useState<[number, number]>([55.65, 12.55]);
+
 
 	useEffect(() => {
 		const load = async () => {
 			const data = await API.spot.fetchAvailableSpots();
 			setFoocleSpots(data);
 		};
+
+		navigator.geolocation.getCurrentPosition(
+			p => setCurrentCenter([p.coords.latitude, p.coords.longitude]),
+			e => {}
+		);
 
 		load();
 
@@ -35,7 +40,7 @@ function ViewFoocleSpotPage() {
 	const selectSpot = async ({
 		payload,
 	}: {
-		payload?: FoocleSpotAvailable & { menus?: SpotMenu[] };
+		payload?: FoocleSpotAvailable & { menus?: newSpotMenu[] };
 	}) => {
 		const newSpot = payload;
 		if (newSpot && newSpot.id) {
@@ -47,7 +52,7 @@ function ViewFoocleSpotPage() {
 
 	return (
 		<div className="relative w-full h-[92%] ">
-			<CustomMap>
+			<CustomMap newStartCenter={currentCenter}>
 				{foocleSpots.map(spot => {
 					const geo: [number, number] = [
 						Number.parseFloat(spot.location.latitude),
@@ -55,10 +60,10 @@ function ViewFoocleSpotPage() {
 					];
 					return (
 						<CustomMarker
+							key={spot.id}
 							hover={spot == currentSpot ? true : undefined}
 							onClick={selectSpot}
 							foocleSpot={spot}
-							key={spot.id}
 							width={50}
 							anchor={geo}
 							color={"#00b295"}
@@ -122,7 +127,10 @@ function ViewFoocleSpotPage() {
 										const dateTo = new Date(m.pickupTimeTo);
 
 										return (
-											<div className="max-h-20 flex rounded-md shadow-md items-center m-1">
+											<div
+												key={m.id}
+												className="max-h-20 flex rounded-md shadow-md items-center m-1"
+											>
 												<img
 													src={m.pictures}
 													className="max-h-20 rounded-l-md"

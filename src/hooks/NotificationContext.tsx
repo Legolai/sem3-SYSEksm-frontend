@@ -5,7 +5,7 @@ import { BASE_API_URL } from "../../settings";
 import { useAuth } from "./AuthContext";
 type Dispatch = (action: Action) => void;
 type Action = {
-	type: "update";
+	type: "update" | "fetched" | "dismiss";
 	[key: string]: any;
 };
 
@@ -24,9 +24,15 @@ const NotificationContext = createContext<NotificationContextProps | undefined>(
 
 function notificationReducer(state: State, action: Action): State {
 	switch (action.type) {
-		case "update": {
+		case "fetched": {
 			const newState = { notifications: action["notifications"] };
-
+			return { ...state, ...newState };
+		}
+		case "dismiss": {
+			const notifications = state.notifications;
+			const newState = {
+				notifications: [...notifications.filter(n => n.id != action.id)],
+			};
 			return { ...state, ...newState };
 		}
 		default: {
@@ -52,7 +58,7 @@ function useNotification() {
 
 	const { state: authState, revalidate } = useAuth();
 
-	const pollingRate = 10_000;
+	const pollingRate = 60_000;
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -60,18 +66,18 @@ function useNotification() {
 		const fetchNotifications = async () => {
 			try {
 				const options = makeOptions("GET", true);
-				const res = await fetch(`${BASE_API_URL}/notification`, {
+				const res = await fetch(`${BASE_API_URL}/notification/new`, {
 					...options,
 					signal: controller.signal,
 				});
 				const data = await handleHttpErrors(res);
-				context.dispatch({ type: "update", notifications: data });
+				context.dispatch({ type: "fetched", notifications: data });
 			} catch (error: any) {
-				console.log(error, "Notifications");
+				console.log("Stopped polling notifications");
 			}
 		};
 
-		const poolingTimer = setInterval(async () => {
+		const pollingTimer = setInterval(async () => {
 			if (await revalidate()) {
 				fetchNotifications();
 			}
@@ -83,14 +89,21 @@ function useNotification() {
 
 		return () => {
 			controller.abort();
-			clearInterval(poolingTimer);
+			clearInterval(pollingTimer);
 		};
 	}, [authState.loggedIn]);
+
+	const dismissNotification = async (id: number) => {
+		context.dispatch({ type: "dismiss", id: id });
+		const options = makeOptions("PUT", true);
+		await fetch(`${BASE_API_URL}/notification/${id}/seen`, options);
+	};
 
 	const state = context.state;
 
 	return {
 		state,
+		dismissNotification,
 	};
 }
 
