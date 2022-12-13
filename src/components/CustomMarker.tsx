@@ -1,5 +1,5 @@
 import React from "react";
-import { Marker, type PigeonProps, type Point } from "pigeon-maps";
+import { Marker, PigeonProps, Point } from "pigeon-maps";
 import resolveConfig from "tailwindcss/resolveConfig";
 import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable.js";
 
