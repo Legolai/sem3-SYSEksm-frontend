@@ -21,7 +21,7 @@ function Header({ setErrorMsg }: HeaderProps) {
 
 	return (
 		<>
-			<nav className="w-full flex shadow-lg p-2 bg-white h-[60px] gap-2">
+			<nav className="w-full sticky top-0 flex shadow-lg p-2 bg-white h-[60px] gap-2">
 				<Logo />
 				<NavItem route={"/"} icon={"home"} label={"Home"} end />
 				<NavItem

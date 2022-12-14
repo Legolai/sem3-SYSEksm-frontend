@@ -2,7 +2,7 @@ import API from "@/api";
 import CustomMap from "@/components/CustomMap";
 import CustomMarker from "@/components/CustomMarker";
 import FoocleSpotAvailable from "@/types/entities/foocleSpotAvailable";
-import { useEffect, useState } from "react";
+import {MouseEvent, MouseEventHandler, useEffect, useState} from "react";
 import {
 	faLocationDot,
 	faEnvelope,
@@ -14,12 +14,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@/components";
 import newSpotMenu from "@/types/entities/newSpotMenu";
+import {useAuth} from "../hooks/AuthContext";
 
 function ViewFoocleSpotPage() {
 	const [foocleSpots, setFoocleSpots] = useState<FoocleSpotAvailable[]>([]);
 	const [currentSpot, setCurrentSpot] = useState<
 		(FoocleSpotAvailable & { menus?: newSpotMenu[] }) | undefined
 	>();
+	const {state} = useAuth();
 	const [currentCenter, setCurrentCenter] = useState<[number, number]>([55.65, 12.55]);
 
 	useEffect(() => {
@@ -51,6 +53,18 @@ function ViewFoocleSpotPage() {
 		setCurrentSpot(newSpot);
 	};
 
+	const requestMenu: MouseEventHandler<HTMLButtonElement> = async ( event) => {
+		const menuID = currentSpot!.id;
+		const scoutID = state.ID;
+		const businessAccountID = currentSpot!.contact_id;
+
+		if (menuID && scoutID){
+		event.currentTarget.disabled = true;
+		event.currentTarget.innerHTML = "Requested";
+		await API.scout.RequestMenu(menuID, scoutID, businessAccountID);
+		}
+	}
+
 	return (
 		<div className="relative w-full h-[92%] ">
 			<CustomMap
@@ -64,7 +78,7 @@ function ViewFoocleSpotPage() {
 					];
 					return (
 						<CustomMarker
-							key={spot.id}
+							key={"map-" + spot.id}
 							hover={spot == currentSpot ? true : undefined}
 							onClick={selectSpot}
 							foocleSpot={spot}
@@ -132,7 +146,7 @@ function ViewFoocleSpotPage() {
 
 										return (
 											<div
-												key={m.id}
+												key={"menu-" + m.id}
 												className="max-h-20 flex rounded-md shadow-md items-center m-1"
 											>
 												<img
@@ -150,7 +164,7 @@ function ViewFoocleSpotPage() {
 															":" +
 															dateTo.getUTCMinutes()}
 													</div>
-													<Button className="py-1">View menu</Button>
+													<Button onClick={requestMenu} className="py-1">Request this menu</Button>
 												</div>
 											</div>
 										);
