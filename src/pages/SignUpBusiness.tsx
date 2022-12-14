@@ -61,7 +61,7 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 		let form = formRef.current?.getElementsByTagName("input")!;
 		for (const key in business) {
 			let input = form.namedItem(key) as HTMLInputElement;
-			if (input && key !== "cvr") {
+			if (input && business[key] && key !== "cvr") {
 				input.value = business[key];
 				input.disabled = true;
 			}
@@ -178,7 +178,7 @@ const SignUpBusiness = ({ afterSubmit }: SignUpProps) => {
 							</Button>
 							<Button
 								onClick={() => {
-									navigate("/signup/business/account", { state: formData });
+									navigate("/signup/business/account", {state: formData});
 								}}
 							>
 								Next

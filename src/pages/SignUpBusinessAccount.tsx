@@ -48,7 +48,7 @@ const SignUpBusinessAccount = ({ afterSubmit }: SignUpProps) => {
 		if (isOk()) {
 			try {
 				const response = await API.business.createBusinessAdminAccount(formData);
-				response.status == 200 && navigate("/signin");
+				setTimeout(()=>{navigate("/signin")}, 1000)
 			} catch (error: any) {
 				const errMsgFull = await error.fullError;
 				console.log(errMsgFull.message);

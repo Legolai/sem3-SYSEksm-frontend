@@ -11,19 +11,19 @@ function Home() {
 				<div className="flex flex-col-reverse md:flex-row flex-[0.9] justify-center items-center gap-10 md:gap-32">
 					<div className="flex flex-col gap-10 w-1/2 md:w-64">
 						<div className="flex flex-col gap-4">
-							<h1 className="font-header font-bold text-4xl">
+							<h1 className="font-header font-bold text-4xl animated fadeInLeft">
 								Help save the world by being a part of{" "}
 								<span className="text-primary-500">Foocle</span>
 							</h1>
-							<p className="font-sub-header">
+							<p className="font-sub-header animated fadeInLeft delay-1s">
 								Stop food going to waste, and help give the ones in need.
 							</p>
 						</div>
 						<Link to={"/signup/business"}>
-							<Button className="max-h-10">Get Started</Button>
+							<Button className="max-h-10 animated fadeInLeft delay-2s">Get Started</Button>
 						</Link>
 					</div>
-					<div className="max-w-xs md:max-w-md:">
+					<div className="max-w-xs md:max-w-md: animated fadeIn">
 						<img src={heroImage} />
 					</div>
 				</div>

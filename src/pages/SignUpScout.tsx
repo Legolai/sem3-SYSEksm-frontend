@@ -38,7 +38,9 @@ const SignUpScout = ({ afterSubmit }: SignUpProps) => {
 		if (isOk()) {
 			setFormData(curr => ({ ...curr, areaCode: "+45" }));
 			const response = await facade.createScoutAccount(formData);
-			response.status == 200 && navigate("/signin");
+			setTimeout(() => {
+				navigate("/signin")
+			}, 1000)
 			onReset();
 		}
 	};
