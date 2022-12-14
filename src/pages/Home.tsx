@@ -1,44 +1,33 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
-import { useAuth } from "../hooks/AuthContext";
-import {Button, InputField} from "@/components";
-import Modal from "@/components/Modal";
-import CreateSpotMenu from "@/pages/CreateSpotMenu";
-import useToggle from "@/hooks/useToggle";
+import { Button } from "@/components";
+import heroImage from "../assets/images/hero.jpg";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
-	const { state: authState } = useAuth();
-	const [greeting, setGreeting] = useState("");
-	const [formData, setFormData] = useState("");
-	const [show, toggle] = useToggle({});
-
-	useEffect(() => {
-		const getGreeting = async () => {
-			let newGreeting = "Welcome!";
-			setGreeting(newGreeting);
-		};
-		getGreeting();
-	}, [authState.loggedIn]);
-
-	const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-		setFormData(e.target.value );
-	};
-
 	return (
 		<>
-			<div className="bg-white p-5 rounded-lg w-fit m-5">{greeting}</div>
-
-			<br/>
-			<h3>Test area for stuff, for now</h3>
-			<br/><br/>
-
-			<div className="bg-white p-5 rounded-lg w-fit m-5">Test for modal
-				<Button onClick={toggle}>Open Modal</Button>
-				<Modal isOpen={show} toggle={toggle}>
-					<CreateSpotMenu/>
-				</Modal>
+			<div className="bg-white h-full flex flex-col">
+				<div className="py-20 flex justify-center items-center gap-10 md:gap-32">
+					<div className="flex flex-col gap-10 md:w-64">
+						<div className="flex flex-col gap-4">
+							<h1 className="font-header font-bold text-4xl">
+								Help save the world by being a part of{" "}
+								<span className="text-primary-500">Foocle</span>
+							</h1>
+							<p className="font-sub-header">
+								Stop food going to waste, and help give the ones in need.
+							</p>
+						</div>
+						<Link to={"/signup/business"}>
+							<Button className="max-h-10">Get Started</Button>
+						</Link>
+					</div>
+					<div className="max-w-md">
+						<img src={heroImage} />
+					</div>
+				</div>
 			</div>
 		</>
-
 	);
 }
 

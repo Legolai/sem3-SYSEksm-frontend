@@ -17,6 +17,7 @@ import BusinessViewSpotMenusForFoocleSpot from "@/pages/BusinessViewSpotMenusFor
 import CreateSpotMenu from "./pages/CreateSpotMenu";
 import BusinessViewRequests from "@/pages/BusinessViewRequests";
 import ScoutHomePage from "./pages/ScoutHomePage";
+import MissingPage from "./pages/404page";
 
 function App() {
 	const { autoLogin, state: authState } = useAuth();
@@ -30,7 +31,10 @@ function App() {
 		<div className="w-screen h-screen bg-gray-100">
 			<Routes>
 				<Route path="/" element={<Header />}>
-					<Route path="/" element={authState.pms == "FOOCLESCOUT" ? <ScoutHomePage/> : <Home />} />
+					<Route
+						path="/"
+						element={authState.pms == "FOOCLESCOUT" ? <ScoutHomePage /> : <Home />}
+					/>
 					<Route
 						path="/scout"
 						element={<GuardedRoute permissionRequired={"FOOCLESCOUT"} />}
@@ -63,7 +67,7 @@ function App() {
 					<Route path="/signup/business/account" element={<SignUpBusinessAccount />} />
 					<Route path="/business/spotmenu/" element={<CreateSpotMenu />} />
 
-					<Route path="*" element={<h1>404 Page Not Found !!!!</h1>} />
+					<Route path="*" element={<MissingPage />} />
 				</Route>
 			</Routes>
 		</div>

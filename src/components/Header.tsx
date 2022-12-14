@@ -60,13 +60,13 @@ function Header({ setErrorMsg }: HeaderProps) {
 						<>
 							<Link
 								to={"/signin"}
-								className="px-4 py-2 text-green-400 rounded-lg hover:scale-105 active:scale-95"
+								className="px-4 py-2 text-primary-500 rounded-lg hover:scale-105 active:scale-95"
 							>
 								Sign In
 							</Link>
 							<Link
 								to={"/signup"}
-								className="text-white px-4 py-2 bg-green-400 rounded-lg hover:scale-105 active:scale-95"
+								className="text-white px-4 py-2 bg-primary-500 rounded-lg hover:scale-105 active:scale-95"
 							>
 								Sign Up
 							</Link>
