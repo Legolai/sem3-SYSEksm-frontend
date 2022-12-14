@@ -1,7 +1,7 @@
 
 
 interface NewFoocleSpot {
-  businessAccountID: string;
+  businessAccountID?: number;
   address: string;
   city: string;
   zipCode: string;
@@ -9,12 +9,11 @@ interface NewFoocleSpot {
 }
 
 const initialNewFoocleSpot: NewFoocleSpot = {
-  businessAccountID: '',
   address: '',
   city: '',
   zipCode: '',
   country: ''
-}
+};
 
-export {initialNewFoocleSpot};
+export { initialNewFoocleSpot };
 export default NewFoocleSpot;

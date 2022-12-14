@@ -11,7 +11,7 @@ interface SignUpProps {
 
 const createFoocleSpot = ({ afterSubmit }: SignUpProps) => {
 	const { state } = useAuth();
-	const init = { businessAccountID: state.ID, address: "", city: "", zipCode: "", country: "" };
+	const init = { businessAccountID: state.ID!, address: "", city: "", zipCode: "", country: "" };
 	const [formData, setFormData] = useState(init);
 	const navigate = useNavigate();
 	const [alert, setAlert] = useState("");
